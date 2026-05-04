@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock Bureaux — L'autorité de l'espace de travail au Maroc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="curR"></div>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="ann">
+  <span><strong>Showroom Casablanca</strong> — 7 bis rue Rethel, Belvédère · <a href="#">Prendre RDV →</a></span>
+  <span>Livraison & pose partout au <strong>Maroc</strong></span>
+</div>
+
+<!-- NAV -->
+<nav id="nb">
+  <div class="nav-in">
+   <a href="#" class="logo"><img src="img/logo.svg" alt="Stock Bureaux"></a>
+    <div class="srch">
+      <span class="srch-ic">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </span>
+      <input type="text" placeholder="Rechercher un produit...">
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="#">Nos Produits <span class="chev">▾</span></a>
+        <div class="mega">
+          <div class="mega-l">
+            <a href="#" class="act">Mobilier d'accueil</a>
+            <a href="#">Bureaux opérateurs</a>
+            <a href="#">Bureaux Multipostes</a>
+            <a href="#">Bureaux de direction</a>
+            <a href="#">Mobilier de réunion</a>
+            <a href="#">Tables rabattables / Hautes</a>
+            <a href="#">Sièges / Fauteuils</a>
+            <a href="#">Canapés / Tables basses</a>
+            <a href="#">Rangements</a>
+            <a href="#">Mobilier de sécurité</a>
+            <a href="#">Tableaux &amp; Affichage</a>
+            <a href="#">Accessoires de bureau</a>
+          </div>
+          <div class="mega-r">
+            <a class="mi" href="#"><div class="mi-img s1"></div><div class="mi-lbl">Comptoirs d'accueil</div></a>
+            <a class="mi" href="#"><div class="mi-img s2"></div><div class="mi-lbl">Canapés d'attente</div></a>
+            <a class="mi" href="#"><div class="mi-img s3"></div><div class="mi-lbl">Sièges d'accueil</div></a>
+            <a class="mi" href="#"><div class="mi-img s4"></div><div class="mi-lbl">Tables basses</div></a>
+            <a class="mi" href="#" style="grid-column:span 2"><div class="mi-img" style="background:var(--blue);display:flex;align-items:center;justify-content:center;gap:12px;padding:0 24px"><span style="font-family:var(--serif);font-size:22px;color:white;font-weight:300">Catalogue 2024–2025</span><span style="font-size:11px;color:rgba(255,255,255,.6);letter-spacing:.1em;text-transform:uppercase">PDF gratuit</span></div><div class="mi-lbl" style="background:var(--ink);color:white;border:none">Télécharger le catalogue complet →</div></a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <a href="#">À Propos <span class="chev">▾</span></a>
+        <div class="drop">
+          <a href="#">Notre histoire</a>
+          <a href="#">Nos réalisations</a>
+          <a href="#">Services</a>
+          <a href="#">Actualité</a>
+        </div>
+      </li>
+      <li><a href="#proj">Projets</a></li>
+      <li><a href="#arch">Architectes</a></li>
+      <li><a href="#show">Showroom</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#cat" class="btn-ghost">Catalogue</a>
+      <a href="#devis" class="bp">Devis Projet →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+ <div class="hero-slide active" style="background-image:url('img/background.png');background-size:cover;background-position:center center">
+    <div class="hero-overlay"></div>
+    <div class="hl">
+      <div class="h-ey fu">Depuis 2005 · Casablanca, Maroc</div>
+      <h1 class="h-hd fu">Votre espace de travail,<br><em>vos règles</em> </h1>
+      <p class="h-sb fu">Découvrez notre gamme de solutions personnalisées pour créer un environnement professionnel qui reflète votre identité et optimise votre efficacité.</p>
+      <div class="h-act fu">
+        <a href="#proj" class="bp">Voir nos réalisations →</a>
+        <a href="#devis" class="btn-ghost">Demander un devis</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-dots">
+    <span class="dot active"></span>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust">
+  <span class="tl">Ils nous font confiance</span>
+  <div class="trust-track-wrap">
+    <div class="trust-track">
+      <img src="img/(1).png" alt="logo1">
+      <img src="img/(2).png" alt="logo2">
+      <img src="img/(3).png" alt="logo3">
+      <img src="img/(4).png" alt="logo4">
+      <img src="img/(5).png" alt="logo5">
+      <img src="img/(6).png" alt="logo6">
+      <img src="img/(7).png" alt="logo7">
+      <img src="img/(8).png" alt="logo8">
+      <img src="img/(9).png" alt="logo9">
+      <img src="img/(10).png" alt="logo10">
+      <!-- duplicate for seamless loop -->
+      <img src="img/(1).png" alt="logo1">
+      <img src="img/(2).png" alt="logo2">
+      <img src="img/(3).png" alt="logo3">
+      <img src="img/(4).png" alt="logo4">
+      <img src="img/(5).png" alt="logo5">
+      <img src="img/(6).png" alt="logo6">
+      <img src="img/(7).png" alt="logo7">
+      <img src="img/(8).png" alt="logo8">
+      <img src="img/(9).png" alt="logo9">
+      <img src="img/(10).png" alt="logo10">
+    </div>
+  </div>
+</div>
+
+<!-- ROUTER -->
+<div class="router">
+  <div class="rc fu"><div class="r-n">01</div><div class="r-ey">Entreprises &amp; Institutions</div><h2 class="r-t">Équipez<br>vos espaces.</h2><p class="r-d">Bureaux de direction, open spaces, salles de réunion. Nous transformons vos locaux en environnements qui reflètent votre identité et boostent la productivité.</p><div class="r-tags"><span class="r-tag">CEO / DG</span><span class="r-tag">Office Manager</span><span class="r-tag">Responsable RH</span><span class="r-tag">Direction Achats</span></div><div class="r-ar">→</div></div>
+  <div class="rc fu"><div class="r-n">02</div><div class="r-ey">Architectes &amp; Designers</div><h2 class="r-t">Concevez<br>l'excellence.</h2><p class="r-d">Fiches techniques, matériaux premium, suivi de projet dédié. Nous sommes le partenaire de référence des professionnels de l'aménagement intérieur au Maroc.</p><div class="r-tags"><span class="r-tag">Architecte</span><span class="r-tag">Interior Designer</span><span class="r-tag">Aménageur</span><span class="r-tag">BET</span></div><div class="r-ar">→</div></div>
+</div>
+
+<!-- WHY US -->
+<section class="why">
+  <div class="why-hd"><div class="w-ey">Pourquoi Stock Bureaux</div><h2 class="w-t">L'expertise qui fait la <em>différence.</em></h2></div>
+  <div class="why-grid">
+    <div class="wc fu"><div class="wi"><img src="img/Sourcing.png" style="width:26px;height:26px;"></div><div class="wn">Sourcing International</div><div class="wd">Fabricants locaux et internationaux sélectionnés pour la qualité de leurs matériaux et la durabilité de leurs produits.</div></div>
+    <div class="wc fu"><div class="wi"><img src="img/Livraison.png" style="width:26px;height:26px;"></div><div class="wn">Livraison &amp; Pose</div><div class="wd">Logistique maîtrisée de A à Z. Livraison et installation professionnelle partout au Maroc dans les délais convenus.</div></div>
+    <div class="wc fu"><div class="wi"><img src="img/Showroom.png" style="width:26px;height:26px;"></div><div class="wn">Showroom 1 200 m²</div><div class="wd">Expérimentez les collections en conditions réelles dans notre showroom de Casablanca. Conseil personnalisé sur rendez-vous.</div></div>
+    <div class="wc fu"><div class="wi"><img src="img/Garantie.png" style="width:26px;height:26px;"></div><div class="wn">SAV &amp; Garantie</div><div class="wd">Service après-vente réactif, garantie constructeur sur l'ensemble de la gamme. Votre investissement est protégé.</div></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="proj-sec" id="proj">
+  <div class="sec-hd"><div><div class="sl">Nos réalisations</div><h2 class="st">Des espaces qui<br><em>marquent les esprits.</em></h2></div><a href="realisations.html" class="slnk">Tous les projets ↗</a></div>
+  <div class="pg">
+  </div>
+</section>
+
+<!-- PRODUCTS — 12 real categories + CTA -->
+<section class="prod-sec" id="prod">
+  <div class="sec-hd"><div><div class="sl">Notre collection</div><h2 class="st">Mobilier pensé<br>pour <em>performer.</em></h2></div><a href="#" class="slnk">Catalogue complet ↗</a></div>
+  <div class="cg">
+    <div class="cc fu"><div class="ci"><div class="cs s1"><div class="csh" style="width:55%;height:42%;"></div></div></div><div class="cin"><div class="cn">Mobilier d'accueil</div><div class="cco">4 sous-catégories</div></div><div class="car">→</div></div>
+    <div class="cc fu"><div class="ci"><div class="cs s2"><div class="csh" style="width:62%;height:38%;"></div></div></div><div class="cin"><div class="cn">Bureaux opérateurs</div><div class="cco">6 modèles</div></div><div class="car">→</div></div>
+    <div class="cc fu"><div class="ci"><div class="cs s3"><div class="csh" style="width:74%;height:32%;"></div></div></div><div class="cin"><div class="cn">Bureaux Multipostes</div><div class="cco">Open space · Bench</div></div><div class="car">→</div></div>
+    <div class="cc fu"><div class="ci"><div class="cs s4"><div class="csh" style="width:50%;height:48%;"></div></div></div><div class="cin"><div class="cn">Bureaux de direction</div><div class="cco">Gamme exécutive</div></div><div class="car">→</div></div>
+    <div class="cc fu"><div class="ci"><div class="cs s5"><div class="csh" style="width:68%;height:35%;"></div></div></div><div class="cin"><div class="cn">Mobilier de réunion</div><div class="cco">Tables · Chaises</div></div><div class="car">→</div></div>
+    <div class="cc fu"><div class="ci"><div class="cs s6"><div class="csh" style="width:63%;height:28%;"></div></div></div><div class="cin"><div class="cn">Tables rabattables / Hautes</div><div class="cco">Modulable · Collectif</div></div><div class="car">→</div></div>
+    <div class="cc fu"><div class="ci"><div class="cs s7"><div class="csh" style="width:38%;height:62%;border-radius:50% 50% 3px 3px;"></div></div></div><div class="cin"><div class="cn">Sièges / Fauteuils</div><div class="cco">Ergonomique · Direction</div></div><div class="car">→</div></div>
+    <div class="cc fu"><div class="ci"><div class="cs s8"><div class="csh" style="width:55%;height:40%;border-radius:6px;"></div></div></div><div class="cin"><div class="cn">Canapés / Tables basses</div><div class="cco">Espace lounge</div></div><div class="car">→</div></div>
+    <div class="cc fu"><div class="ci"><div class="cs s9"><div class="csh" style="width:42%;height:58%;"></div></div></div><div class="cin"><div class="cn">Rangements</div><div class="cco">Armoires · Caissons</div></div><div class="car">→</div></div>
+    <div class="cc fu"><div class="ci"><div class="cs s10"><div class="csh" style="width:48%;height:52%;"></div></div></div><div class="cin"><div class="cn">Mobilier de sécurité</div><div class="cco">Coffres · Sécurité</div></div><div class="car">→</div></div>
+    <div class="cc fu"><div class="ci"><div class="cs s11"><div class="csh" style="width:65%;height:42%;"></div></div></div><div class="cin"><div class="cn">Tableaux &amp; Affichage</div><div class="cco">Blanc · Liège · Digital</div></div><div class="car">→</div></div>
+    <div class="cc fu"><div class="ci"><div class="cs s12"><div class="csh" style="width:40%;height:40%;border-radius:50%;"></div></div></div><div class="cin"><div class="cn">Accessoires de bureau</div><div class="cco">Organisation · Confort</div></div><div class="car">→</div></div>
+    <div class="cta-card"><div><h3>Agencement sur mesure.<br><em>Clé en main.</em></h3><p>De la conception à la livraison — nous gérons votre projet d'espace complet. Conseil, sourcing, pose et suivi.</p></div><a href="#devis" class="bws">Démarrer un projet →</a></div>
+  </div>
+</section>
+
+<!-- PRODUCT PAGE PREVIEW -->
+<section class="pp-sec" id="produit">
+  <div class="sec-hd" style="margin-bottom:52px"><div><div class="sl">Aperçu fiche produit</div><h2 class="st">L'expérience<br><em>produit premium.</em></h2></div><a href="#" class="slnk">Voir tous les produits ↗</a></div>
+  <div class="pp-lay">
+    <div class="pp-gal fu">
+      <div class="pp-main"><div class="pp-sc"></div></div>
+      <div class="pp-thumbs">
+        <div class="pp-th act"><div class="pp-tsc s7"></div></div>
+        <div class="pp-th"><div class="pp-tsc s8"></div></div>
+        <div class="pp-th"><div class="pp-tsc s9"></div></div>
+        <div class="pp-th"><div class="pp-tsc s10"></div></div>
+        <div class="pp-th"><div class="pp-tsc s11"></div></div>
+        <div class="pp-th"><div class="pp-tsc s12"></div></div>
+        <div class="pp-th"><div class="pp-tsc s1"></div></div>
+        <div class="pp-th"><div class="pp-tsc s2"></div></div>
+      </div>
+    </div>
+    <div class="pp-r fu">
+      <div class="pp-bc">Sièges / Fauteuils <span>›</span> <span>Chaises opérateurs</span></div>
+      <h1 class="pp-nm">PINKO</h1>
+      <div class="pp-div"></div>
+      <div class="pp-specs">
+        <div class="pp-sp">Dossier en mesh (Résille) haute respirabilité</div>
+        <div class="pp-sp">Assise rembourrée en mousse haute densité</div>
+        <div class="pp-sp">Structure métallique noire tube rond avec accoudoirs</div>
+        <div class="pp-sp">Deux versions disponibles : sur patins ou sur roulettes</div>
+        <div class="pp-sp">Plusieurs choix de couleurs de tissu</div>
+      </div>
+      <div class="pp-sl">Choisir options</div>
+      <div class="pp-opts">
+        <div class="pp-opt act">Sur patins</div>
+        <div class="pp-opt">Sur roulettes</div>
+      </div>
+      <div class="pp-sl">Couleur tissu</div>
+      <div class="pp-cols">
+        <div class="pp-col act" style="background:#1A1AFF" title="Bleu"></div>
+        <div class="pp-col" style="background:#8B1A4A" title="Bordeaux"></div>
+        <div class="pp-col" style="background:#C8BFB0" title="Beige"></div>
+        <div class="pp-col" style="background:#1A1A1A" title="Noir"></div>
+        <div class="pp-col" style="background:#D4541A" title="Orange"></div>
+        <div class="pp-col" style="background:#C02020" title="Rouge"></div>
+        <div class="pp-col" style="background:#4A4848" title="Gris anthracite"></div>
+      </div>
+      <div class="pp-acts">
+        <div class="pp-qty">
+          <button onclick="let i=this.nextElementSibling;if(+i.value>1)i.value=+i.value-1">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="let i=this.previousElementSibling;i.value=+i.value+1">+</button>
+        </div>
+        <a href="#devis" class="bd">Ajouter au devis →</a>
+        <a href="#" class="bf">📄 Fiche tech.</a>
+      </div>
+      <div class="pp-ass">
+        <div class="pa-it"><div class="pa-ic">🚚</div><div><div class="pa-t">Livraison &amp; Pose</div><div class="pa-s">Partout au Maroc</div></div></div>
+        <div class="pa-it"><div class="pa-ic">✓</div><div><div class="pa-t">Garantie constructeur</div><div class="pa-s">2 ans minimum</div></div></div>
+        <div class="pa-it"><div class="pa-ic">📋</div><div><div class="pa-t">Devis sous 24h</div><div class="pa-s">Réponse garantie</div></div></div>
+        <div class="pa-it"><div class="pa-ic">🏛</div><div><div class="pa-t">Showroom</div><div class="pa-s">Voir en vrai à Casa</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<section class="stmt-sec" id="services">
+  <div class="fu">
+    <div class="s-ey">Notre philosophie</div>
+    <h2 class="s-hd">Un espace bien conçu<br>n'est pas un luxe —<br>c'est une <em>stratégie.</em></h2>
+    <p class="s-bd">Chaque entreprise mérite un environnement qui reflète ses ambitions. Chez Stock Bureaux, nous ne vendons pas du mobilier : nous construisons des espaces qui inspirent, retiennent les talents et impressionnent les clients.</p>
+    <a href="#" class="bp" style="display:inline-flex;align-items:center;gap:8px">Notre approche →</a>
+    <div class="pills">
+      <div class="pill"><div class="pl-n">01</div><div class="pl-t">Conseil &amp; Conception</div><div class="pl-d">Analyse de vos besoins, plan d'aménagement 2D/3D, sélection des gammes.</div></div>
+      <div class="pill"><div class="pl-n">02</div><div class="pl-t">Sourcing Premium</div><div class="pl-d">Fabricants locaux et internationaux sélectionnés pour leur qualité.</div></div>
+      <div class="pill"><div class="pl-n">03</div><div class="pl-t">Livraison &amp; Pose</div><div class="pl-d">Installation professionnelle dans les délais, partout au Maroc.</div></div>
+      <div class="pill"><div class="pl-n">04</div><div class="pl-t">Suivi &amp; Garantie</div><div class="pl-d">SAV réactif, garantie constructeur sur toute la gamme.</div></div>
+    </div>
+  </div>
+  <div class="sv fu">
+    <div class="si"><div style="position:absolute;inset:0;background:linear-gradient(160deg,#ddd8cf,#b0ab9e)"></div><div style="position:absolute;bottom:32%;left:50%;transform:translateX(-50%);width:58%;height:6px;background:#1c1812;border-radius:2px"></div></div>
+    <div class="sf"><strong>+500</strong>espaces transformés<br>depuis 2005</div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="tst" id="temoignages">
+  <div class="sec-hd"><div><div class="sl">Ce que disent nos clients</div><h2 class="st" style="color:var(--white)">Ils ont fait<br><em>confiance.</em></h2></div></div>
+  <div class="tg">
+    <div class="tc fu">
+      <div class="t-hd">"Un résultat qui dépasse toutes nos attentes"</div>
+      <div class="t-st"><span class="t-s">★</span><span class="t-s">★</span><span class="t-s">★</span><span class="t-s">★</span><span class="t-s">★</span></div>
+      <p class="t-q">"Stock Bureaux a transformé notre siège social en un espace qui inspire confiance et modernité. Leur équipe a su comprendre notre ADN institutionnel."</p>
+      <div class="t-dv"></div>
+      <div class="t-au"><div class="t-av">KB</div><div><div style="display:flex;align-items:center;gap:3px"><div class="t-nm">Khalid Bensouda</div><div class="t-vf">✓</div></div><div class="t-rl">Directeur Général · CIH Bank</div></div></div>
+      <div class="t-ph"><div class="t-phs" style="background:linear-gradient(145deg,#1a1a2e,#16213e)"></div></div>
+    </div>
+    <div class="tc fu">
+      <div class="t-hd">"Notre partenaire de référence, 4 projets ensemble"</div>
+      <div class="t-st"><span class="t-s">★</span><span class="t-s">★</span><span class="t-s">★</span><span class="t-s">★</span><span class="t-s">★</span></div>
+      <p class="t-q">"En tant qu'architecte, j'ai besoin de partenaires fiables sur les délais et la qualité. Stock Bureaux est notre référence absolue pour tous nos projets tertiaires."</p>
+      <div class="t-dv"></div>
+      <div class="t-au"><div class="t-av">LM</div><div><div style="display:flex;align-items:center;gap:3px"><div class="t-nm">Leila Mansouri</div><div class="t-vf">✓</div></div><div class="t-rl">Architecte Associée · Atelier M</div></div></div>
+      <div class="t-ph"><div class="t-phs" style="background:linear-gradient(145deg,#1a2e1a,#162116)"></div></div>
+    </div>
+    <div class="tc fu">
+      <div class="t-hd">"4 étages gérés de A à Z, sans la moindre faille"</div>
+      <div class="t-st"><span class="t-s">★</span><span class="t-s">★</span><span class="t-s">★</span><span class="t-s">★</span><span class="t-s">★</span></div>
+      <p class="t-q">"Nous avons équipé 4 étages de bureaux. Stock Bureaux a géré l'ensemble du projet de la conception à la pose, dans les délais. Résultat exceptionnel."</p>
+      <div class="t-dv"></div>
+      <div class="t-au"><div class="t-av">YC</div><div><div style="display:flex;align-items:center;gap:3px"><div class="t-nm">Youssef Chraibi</div><div class="t-vf">✓</div></div><div class="t-rl">CFO · Marsa Maroc</div></div></div>
+      <div class="t-ph"><div class="t-phs" style="background:linear-gradient(145deg,#2e1a1a,#211616)"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA DOUBLE -->
+<section class="ctad" id="devis">
+  <div class="ctl"><div class="c-ey">Commencer votre projet</div><h2 class="c-hd">Parlons de<br>vos espaces.</h2><p class="c-bd">Un consultant dédié vous répond sous 24h pour analyser votre projet et vous proposer une solution sur mesure.</p><a href="#" class="bwh">Consultation gratuite →</a></div>
+  <div class="ctr" id="cat"><div class="c-ey">Télécharger</div><h2 class="c-hd">Catalogue<br>2024 — 2025</h2><p class="c-bd">200+ références, fiches techniques, gammes de prix. Recevez notre catalogue PDF complet par email.</p><a href="#" class="bdo">Obtenir le catalogue →</a></div>
+</section>
+
+<!-- ARCHITECT -->
+<section class="arch-sec" id="arch">
+  <div class="al"><div class="a-ey">Programme Partenaires</div><h2 class="a-t">Architectes &amp; Designers —<br>rejoignez notre réseau.</h2><p class="a-d">Accès prioritaire aux nouvelles collections, remises professionnelles, support technique dédié et co-branding sur les projets. Nous construisons avec vous.</p><a href="#" class="bp" style="display:inline-flex;align-items:center;gap:8px">Rejoindre le programme →</a></div>
+  <div class="aperks">
+    <div class="apk"><div class="apk-i">%</div><div class="apk-l">Remises Pro</div><div class="apk-s">Jusqu'à 30%</div></div>
+    <div class="apk"><div class="apk-i">⚡</div><div class="apk-l">Priorité stock</div><div class="apk-s">Délais garantis</div></div>
+    <div class="apk"><div class="apk-i">📐</div><div class="apk-l">Plans CAO</div><div class="apk-s">Fichiers fournis</div></div>
+    <div class="apk"><div class="apk-i">★</div><div class="apk-l">Référencement</div><div class="apk-s">Sur notre site</div></div>
+  </div>
+</section>
+
+<!-- SHOWROOM -->
+<section class="show-sec" id="show">
+  <div class="shv"><div class="shv-bg"></div><div style="position:absolute;bottom:28%;left:50%;transform:translateX(-50%);width:52%;height:7px;background:#1c1812;border-radius:2px"></div><div class="sh-tg">Visitez-nous</div></div>
+  <div class="shc"><div class="sh-ey">Showroom Casablanca</div><h2 class="sh-t">Vivez l'<em>expérience</em><br>en direct.</h2><p class="sh-d">1 200 m² de mobilier exposé en conditions réelles. Nos conseillers vous accueillent sur rendez-vous pour un accompagnement personnalisé.</p><div class="sh-inf"><div class="sh-ii"><div class="sh-dot"></div>7 bis rue Rethel, Belvédère · Casablanca</div><div class="sh-ii"><div class="sh-dot"></div>Zone ATTAWFIQ · Aïn Sebaâ · Casablanca</div><div class="sh-ii"><div class="sh-dot"></div>Lun – Sam · 9h00 – 18h00</div><div class="sh-ii"><div class="sh-dot"></div>+212 5224-08944</div></div><a href="#" class="bp" style="display:inline-flex;align-items:center;gap:8px;width:fit-content">Prendre rendez-vous →</a></div>
+</section>
+
+<!-- BLOG -->
+<section class="blog-sec" id="blog">
+  <div class="sec-hd"><div><div class="sl">Inspiration &amp; Expertise</div><h2 class="st">Le bureau de<br><em>demain</em>, aujourd'hui.</h2></div><a href="#" class="slnk">Tous les articles ↗</a></div>
+  <div class="bg">
+    <div class="bc fu"><div class="bi"><div class="bii" style="background:linear-gradient(145deg,#ddd8cf,#c8c3b8)"></div></div><div class="b-c">Tendances 2024</div><h3 class="b-t">Le bureau hybride : comment aménager un espace flexible</h3><p class="b-e">Les nouvelles façons de travailler exigent des espaces qui s'adaptent. Voici les solutions les plus efficaces pour votre entreprise.</p><div class="b-d">15 Avril 2024</div></div>
+    <div class="bc fu"><div class="bi"><div class="bii" style="background:linear-gradient(145deg,#d8e0dd,#c0ccc8)"></div></div><div class="b-c">Ergonomie</div><h3 class="b-t">Pourquoi investir dans des sièges ergonomiques augmente la productivité</h3><p class="b-e">Les études sont formelles : le confort au travail a un impact direct et mesurable sur la performance des équipes.</p><div class="b-d">2 Mars 2024</div></div>
+    <div class="bc fu"><div class="bi"><div class="bii" style="background:linear-gradient(145deg,#e0ddd6,#ccc8c0)"></div></div><div class="b-c">Architecture</div><h3 class="b-t">5 tendances d'aménagement tertiaire qui transforment les entreprises marocaines</h3><p class="b-e">De l'open space à la salle de méditation, les entreprises marocaines réinventent leurs espaces de travail.</p><div class="b-d">18 Fév 2024</div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <div><div class="fb">Stock<span>.</span>Bureaux</div><p class="ftg">L'autorité du mobilier de bureau professionnel au Maroc. Fabricant, importateur, distributeur depuis 2005.</p><div class="fco">7 bis rue Rethel, Belvédère · 20350 Casablanca<br>Zone industrielle ATTAWFIQ · Aïn Sebaâ<br><br>+212 5224-08944<br>contact@stockbureaux.com</div></div>
+    <div><div class="fct">Produits</div><ul class="fl"><li><a href="#">Mobilier d'accueil</a></li><li><a href="#">Bureaux de direction</a></li><li><a href="#">Sièges &amp; Fauteuils</a></li><li><a href="#">Mobilier de réunion</a></li><li><a href="#">Rangements</a></li><li><a href="#">Accessoires</a></li></ul></div>
+    <div><div class="fct">Services</div><ul class="fl"><li><a href="#">Agencement sur mesure</a></li><li><a href="#">Conseil en aménagement</a></li><li><a href="#">Programme Architectes</a></li><li><a href="#">Devis en ligne</a></li><li><a href="#">Livraison &amp; Pose</a></li><li><a href="#">SAV &amp; Garantie</a></li></ul></div>
+    <div><div class="fct">Entreprise</div><ul class="fl"><li><a href="#">Notre histoire</a></li><li><a href="#">Nos réalisations</a></li><li><a href="#">Showroom</a></li><li><a href="#">Blog &amp; Inspiration</a></li><li><a href="#">Catalogue PDF</a></li><li><a href="#">Contact</a></li></ul></div>
+  </div>
+  <div class="fbot"><span>© 2024 Stock Bureaux. Tous droits réservés.</span><div class="fsoc"><a href="#">Facebook</a><a href="#">LinkedIn</a><a href="#">Instagram</a></div></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sbClient = window.supabase.createClient(
+  'https://lvfbzhinkcovdeiaugsr.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2ZmJ6aGlua2NvdmRlaWF1Z3NyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MTMzMjAsImV4cCI6MjA5MzQ4OTMyMH0.1De-2BGx9qZM5ydDfZ9Y36zktkbpscgp9b2izbvWIIw'
+)
+</script>
+<script src="script.js"></script>
+</body>
+</html>
