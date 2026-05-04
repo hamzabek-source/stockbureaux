@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nos Réalisations — Stock Bureaux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.rl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;background:rgba(12,12,12,.09)}
+.rl-card{position:relative;overflow:hidden;cursor:pointer;background:#F8F6F1;aspect-ratio:4/3}
+.rl-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
+.rl-card:hover .rl-img{transform:scale(1.05)}
+.rl-over{position:absolute;bottom:0;left:0;right:0;padding:24px;background:linear-gradient(to top,rgba(0,0,0,.75),transparent);transform:translateY(8px);transition:transform .4s}
+.rl-card:hover .rl-over{transform:translateY(0)}
+.rl-cat{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px}
+.rl-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:white;line-height:1.2}
+.rl-meta{font-size:11px;color:rgba(255,255,255,.45);margin-top:5px}
+.page-hero{background:#0C0C0C;padding:80px 64px 64px;border-bottom:3px solid #003CC7}
+.page-hero-ey{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.page-hero-ey::before{content:'';width:28px;height:1px;background:rgba(255,255,255,.4)}
+.page-hero-h{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,5vw,72px);font-weight:300;color:white;line-height:1.05}
+.page-hero-h em{font-style:italic;color:#003CC7}
+.empty{padding:80px;text-align:center;color:#6E6E6E;font-size:14px}
+#r-modal{display:none;position:fixed;inset:0;z-index:500;align-items:center;justify-content:center}
+#r-modal.open{display:flex}
+@media(max-width:960px){
+.rl-grid{grid-template-columns:1fr 1fr}
+.page-hero{padding:60px 22px 48px}
+}
+@media(max-width:600px){.rl-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body style="cursor:none">
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="curR"></div>
+
+<nav id="nb">
+  <div class="nav-in">
+    <a href="index.html" class="logo"><img src="img/logo.svg" alt="Stock Bureaux"></a>
+    <div class="srch">
+      <span class="srch-ic">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </span>
+      <input type="text" placeholder="Rechercher un produit...">
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="index.html#show">Showroom</a></li>
+      <li><a href="index.html#arch">Architectes</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="index.html#cat" class="btn-ghost">Catalogue</a>
+      <a href="index.html#devis" class="bp">Devis Projet →</a>
+    </div>
+  </div>
+</nav>
+
+<div style="height:calc(70px + 44px)"></div>
+
+<div class="page-hero">
+  <div class="page-hero-ey">Nos réalisations</div>
+  <h1 class="page-hero-h">Des espaces qui<br><em>marquent les esprits.</em></h1>
+</div>
+
+<div style="padding:3px;background:#F8F6F1;min-height:400px">
+  <div class="rl-grid" id="rl-grid"></div>
+  <div class="empty" id="rl-empty" style="display:none">Aucune réalisation trouvée.</div>
+</div>
+
+<footer>
+  <div class="ft">
+    <div><div class="fb">Stock<span>.</span>Bureaux</div><p class="ftg">L'autorité du mobilier de bureau professionnel au Maroc.</p><div class="fco">7 bis rue Rethel · Casablanca<br>+212 5224-08944</div></div>
+    <div><div class="fct">Produits</div><ul class="fl"><li><a href="#">Mobilier d'accueil</a></li><li><a href="#">Bureaux de direction</a></li><li><a href="#">Sièges & Fauteuils</a></li></ul></div>
+    <div><div class="fct">Services</div><ul class="fl"><li><a href="#">Agencement sur mesure</a></li><li><a href="#">Devis en ligne</a></li><li><a href="#">Livraison & Pose</a></li></ul></div>
+    <div><div class="fct">Entreprise</div><ul class="fl"><li><a href="index.html">Accueil</a></li><li><a href="#">Showroom</a></li><li><a href="#">Contact</a></li></ul></div>
+  </div>
+  <div class="fbot"><span>© 2024 Stock Bureaux. Tous droits réservés.</span></div>
+</footer>
+
+<!-- MODAL -->
+<div id="r-modal">
+  <div id="r-modal-bg" style="position:absolute;inset:0;backdrop-filter:blur(12px);background:rgba(0,0,0,.75)"></div>
+  <div id="r-modal-box" style="position:relative;z-index:501;background:#0C0C0C;width:90vw;max-width:1100px;max-height:90vh;overflow-y:auto;display:flex;flex-direction:column">
+    <button id="r-modal-close" style="position:absolute;top:20px;right:20px;background:none;border:none;color:white;font-size:28px;cursor:pointer;z-index:10;line-height:1">×</button>
+    <div id="r-modal-hero" style="width:100%;height:55vh;background-size:cover;background-position:center;position:relative;flex-shrink:0">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(12,12,12,1) 0%,rgba(0,0,0,0) 60%)"></div>
+      <div style="position:absolute;bottom:32px;left:40px;right:40px">
+        <div style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:10px">Réalisation · Stock Bureaux</div>
+        <div id="r-modal-title" style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,52px);font-weight:300;color:white;line-height:1.05;margin-bottom:16px"></div>
+        <div id="r-modal-meta" style="display:flex;gap:28px"></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 260px;gap:48px;padding:40px">
+      <div>
+        <div style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#003CC7;margin-bottom:16px;display:flex;align-items:center;gap:10px"><span style="width:20px;height:1px;background:#003CC7;display:inline-block"></span>À propos</div>
+        <p id="r-modal-desc" style="font-size:15px;line-height:1.85;color:rgba(255,255,255,.6);font-weight:300"></p>
+        <div style="margin-top:32px">
+          <a href="index.html#devis" style="display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:white;background:#003CC7;padding:11px 24px;text-decoration:none" onclick="closeModal()">Demander un devis similaire →</a>
+        </div>
+      </div>
+      <div style="border-top:2px solid #003CC7;padding-top:20px">
+        <div style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#003CC7;margin-bottom:16px">Détails</div>
+        <div id="r-modal-details"></div>
+      </div>
+    </div>
+    <div id="r-modal-gallery" style="padding:0 40px 40px;display:grid;grid-template-columns:repeat(3,1fr);gap:3px"></div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lb" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:600;align-items:center;justify-content:center" onclick="closeLb()">
+  <img id="lb-img" src="" style="max-width:90vw;max-height:90vh;object-fit:contain">
+  <button style="position:absolute;top:20px;right:28px;background:none;border:none;color:white;font-size:32px;cursor:pointer" onclick="closeLb()">×</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sbClient = window.supabase.createClient(
+  'https://lvfbzhinkcovdeiaugsr.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2ZmJ6aGlua2NvdmRlaWF1Z3NyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MTMzMjAsImV4cCI6MjA5MzQ4OTMyMH0.1De-2BGx9qZM5ydDfZ9Y36zktkbpscgp9b2izbvWIIw'
+)
+
+document.getElementById('r-modal-close').onclick = closeModal
+document.getElementById('r-modal-bg').onclick = closeModal
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal() })
+
+function openModal(r) {
+  const images = r.images && r.images.length > 0 ? r.images : (r.image_url ? [r.image_url] : [])
+  document.getElementById('r-modal-hero').style.backgroundImage = `url('${images[0] || ''}')`
+  document.getElementById('r-modal-title').textContent = r.titre
+  document.getElementById('r-modal-meta').innerHTML = [
+    r.ville ? `<div><div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:3px">Ville</div><div style="font-size:13px;color:white">${r.ville}</div></div>` : '',
+    r.surface ? `<div><div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:3px">Surface</div><div style="font-size:13px;color:white">${r.surface}</div></div>` : '',
+    r.annee ? `<div><div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:3px">Année</div><div style="font-size:13px;color:white">${r.annee}</div></div>` : '',
+  ].join('')
+  document.getElementById('r-modal-desc').textContent = r.description || 'Aucune description disponible.'
+  document.getElementById('r-modal-details').innerHTML = [
+    ['Projet',r.titre],['Ville',r.ville],['Surface',r.surface],['Année',r.annee]
+  ].filter(([,v])=>v).map(([k,v])=>`
+    <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07)">
+      <span style="font-size:12px;color:rgba(255,255,255,.35)">${k}</span>
+      <span style="font-size:13px;color:white;font-weight:500">${v}</span>
+    </div>`).join('')
+  const gallery = document.getElementById('r-modal-gallery')
+  if (images.length > 1) {
+    gallery.style.display = 'grid'
+    gallery.innerHTML = images.map((url,i)=>`
+      <div onclick="openLightbox('${url}')" style="aspect-ratio:4/3;overflow:hidden;cursor:pointer">
+        <img src="${url}" style="width:100%;height:100%;object-fit:cover;transition:transform .5s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      </div>`).join('')
+  } else { gallery.style.display='none' }
+  document.getElementById('r-modal').classList.add('open')
+  document.body.style.overflow = 'hidden'
+  document.getElementById('r-modal-box').scrollTop = 0
+}
+
+function closeModal() {
+  document.getElementById('r-modal').classList.remove('open')
+  document.body.style.overflow = ''
+}
+function openLightbox(url) {
+  document.getElementById('lb-img').src = url
+  document.getElementById('lb').style.display = 'flex'
+}
+function closeLb() { document.getElementById('lb').style.display = 'none' }
+
+async function loadAll() {
+  const { data } = await sbClient.from('realisations').select('*').order('created_at', { ascending: false })
+  const grid = document.getElementById('rl-grid')
+  const empty = document.getElementById('rl-empty')
+  if (!data || data.length === 0) { empty.style.display='block'; return }
+  grid.innerHTML = ''
+  data.forEach(r => {
+    const card = document.createElement('div')
+    card.className = 'rl-card'
+    card.innerHTML = `
+      <div class="rl-img" style="background-image:url('${r.image_url}')"></div>
+      <div class="rl-over">
+        <div class="rl-cat">${r.ville||''} ${r.annee?'· '+r.annee:''}</div>
+        <div class="rl-title">${r.titre}</div>
+        <div class="rl-meta">${r.surface||''}</div>
+      </div>`
+    card.onclick = () => openModal(r)
+    grid.appendChild(card)
+  })
+}
+loadAll()
+
+const cur = document.getElementById('cur')
+const curR = document.getElementById('curR')
+let mx=0,my=0,rx=0,ry=0
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'})
+;(function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop)})()
+const nb=document.getElementById('nb')
+window.addEventListener('scroll',()=>{nb.style.boxShadow=window.scrollY>60?'0 2px 20px rgba(0,0,0,.06)':'none'})
+</script>
+</body>
+</html>
