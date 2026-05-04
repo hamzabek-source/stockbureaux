@@ -81,7 +81,7 @@ async function loadRealisations() {
   data.forEach((r, i) => {
     const isLg = i === 0
     const div = document.createElement('div')
-    div.className = `pc ${isLg ? 'lg' : ''} fu`
+    div.className = `pc ${isLg ? 'lg' : ''} fu vis`
     div.innerHTML = `
       <div class="pb" style="background-image:url('${r.image_url}');background-size:cover;background-position:center"></div>
       ${isLg ? '<div class="ptag">Projet Signature</div>' : ''}
