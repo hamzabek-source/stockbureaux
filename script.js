@@ -288,11 +288,12 @@ async function loadCategories() {
     const div = document.createElement('div')
     div.className = 'cc fu vis'
     div.style.cursor = 'pointer'
-    div.innerHTML = `
+  div.innerHTML = `
       <div class="ci">
-        <div class="cs ${colors[i % colors.length]}">
-          <div class="csh" style="width:55%;height:42%;"></div>
-        </div>
+        ${cat.image_url 
+          ? `<img src="${cat.image_url}" style="width:100%;height:100%;object-fit:cover;">` 
+          : `<div class="cs ${colors[i % colors.length]}"><div class="csh" style="width:55%;height:42%;"></div></div>`
+        }
       </div>
       <div class="cin">
         <div class="cn">${cat.nom}</div>
