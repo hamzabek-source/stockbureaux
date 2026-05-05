@@ -171,68 +171,6 @@
   </div>
 </section>
 
-<!-- PRODUCT PAGE PREVIEW -->
-<section class="pp-sec" id="produit">
-  <div class="sec-hd" style="margin-bottom:52px"><div><div class="sl">Aperçu fiche produit</div><h2 class="st">L'expérience<br><em>produit premium.</em></h2></div><a href="#" class="slnk">Voir tous les produits ↗</a></div>
-  <div class="pp-lay">
-    <div class="pp-gal fu">
-      <div class="pp-main"><div class="pp-sc"></div></div>
-      <div class="pp-thumbs">
-        <div class="pp-th act"><div class="pp-tsc s7"></div></div>
-        <div class="pp-th"><div class="pp-tsc s8"></div></div>
-        <div class="pp-th"><div class="pp-tsc s9"></div></div>
-        <div class="pp-th"><div class="pp-tsc s10"></div></div>
-        <div class="pp-th"><div class="pp-tsc s11"></div></div>
-        <div class="pp-th"><div class="pp-tsc s12"></div></div>
-        <div class="pp-th"><div class="pp-tsc s1"></div></div>
-        <div class="pp-th"><div class="pp-tsc s2"></div></div>
-      </div>
-    </div>
-    <div class="pp-r fu">
-      <div class="pp-bc">Sièges / Fauteuils <span>›</span> <span>Chaises opérateurs</span></div>
-      <h1 class="pp-nm">PINKO</h1>
-      <div class="pp-div"></div>
-      <div class="pp-specs">
-        <div class="pp-sp">Dossier en mesh (Résille) haute respirabilité</div>
-        <div class="pp-sp">Assise rembourrée en mousse haute densité</div>
-        <div class="pp-sp">Structure métallique noire tube rond avec accoudoirs</div>
-        <div class="pp-sp">Deux versions disponibles : sur patins ou sur roulettes</div>
-        <div class="pp-sp">Plusieurs choix de couleurs de tissu</div>
-      </div>
-      <div class="pp-sl">Choisir options</div>
-      <div class="pp-opts">
-        <div class="pp-opt act">Sur patins</div>
-        <div class="pp-opt">Sur roulettes</div>
-      </div>
-      <div class="pp-sl">Couleur tissu</div>
-      <div class="pp-cols">
-        <div class="pp-col act" style="background:#1A1AFF" title="Bleu"></div>
-        <div class="pp-col" style="background:#8B1A4A" title="Bordeaux"></div>
-        <div class="pp-col" style="background:#C8BFB0" title="Beige"></div>
-        <div class="pp-col" style="background:#1A1A1A" title="Noir"></div>
-        <div class="pp-col" style="background:#D4541A" title="Orange"></div>
-        <div class="pp-col" style="background:#C02020" title="Rouge"></div>
-        <div class="pp-col" style="background:#4A4848" title="Gris anthracite"></div>
-      </div>
-      <div class="pp-acts">
-        <div class="pp-qty">
-          <button onclick="let i=this.nextElementSibling;if(+i.value>1)i.value=+i.value-1">−</button>
-          <input type="number" value="1" min="1">
-          <button onclick="let i=this.previousElementSibling;i.value=+i.value+1">+</button>
-        </div>
-        <a href="#devis" class="bd">Ajouter au devis →</a>
-        <a href="#" class="bf">📄 Fiche tech.</a>
-      </div>
-      <div class="pp-ass">
-        <div class="pa-it"><div class="pa-ic">🚚</div><div><div class="pa-t">Livraison &amp; Pose</div><div class="pa-s">Partout au Maroc</div></div></div>
-        <div class="pa-it"><div class="pa-ic">✓</div><div><div class="pa-t">Garantie constructeur</div><div class="pa-s">2 ans minimum</div></div></div>
-        <div class="pa-it"><div class="pa-ic">📋</div><div><div class="pa-t">Devis sous 24h</div><div class="pa-s">Réponse garantie</div></div></div>
-        <div class="pa-it"><div class="pa-ic">🏛</div><div><div class="pa-t">Showroom</div><div class="pa-s">Voir en vrai à Casa</div></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- STATEMENT -->
 <section class="stmt-sec" id="services">
   <div class="fu">
@@ -311,12 +249,12 @@ function buildTrack() {
   track.innerHTML = ''
   reviews.forEach((r, i) => {
     const card = document.createElement('div')
-    card.style.cssText = `min-width:calc((100% - 32px) / ${VISIBLE});background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:28px 26px;flex-shrink:0;transition:background .3s;box-sizing:border-box`
+    card.style.cssText = `min-width:calc((100% - 32px) / 3);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:28px 26px;flex-shrink:0;transition:background .3s;box-sizing:border-box`
     card.innerHTML = `
       <div style="display:flex;gap:2px;margin-bottom:14px">
         ${'★★★★★'.split('').map(s=>`<span style="color:var(--blue);font-size:14px">★</span>`).join('')}
       </div>
-      <p style="font-size:13px;line-height:1.8;color:rgba(255,255,255,.55);font-style:italic;margin-bottom:20px;min-height:72px">"${r.text}"</p>
+      <p style="font-size:13px;line-height:1.8;color:rgba(255,255,255,.55);font-style:italic;margin-bottom:20px;min-height:60px">"${r.text}"</p>
       <div style="display:flex;align-items:center;gap:10px;padding-top:16px;border-top:1px solid rgba(255,255,255,.07)">
         <div style="width:36px;height:36px;border-radius:50%;background:${avatarColors[i%avatarColors.length]};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:white;flex-shrink:0;font-family:var(--sans)">${getInitials(r.name)}</div>
         <div>
@@ -431,7 +369,7 @@ window.addEventListener('resize', () => { buildTrack(); goTo(0) })
   <div class="ft">
     <<div>
   <div class="fb" style="margin-bottom:16px">
-    <img src="img/logo.svg" alt="Stock Bureaux" style="height:44px;width:auto;filter:brightness(0) invert(1)">
+   <img src="img/logo.svg" alt="Stock Bureaux" style="height:44px;width:auto;filter:brightness(0) invert(1);max-width:160px">
   </div> <p class="ftg">L'autorité du mobilier de bureau professionnel au Maroc. Fabricant, importateur, distributeur depuis 2005.</p><div class="fco">7 bis rue Rethel, Belvédère · 20350 Casablanca<br>Zone industrielle ATTAWFIQ · Aïn Sebaâ<br><br>+212 5224-08944<br>contact@stockbureaux.com</div></div>
     <div><div class="fct">Produits</div><ul class="fl"><li><a href="#">Mobilier d'accueil</a></li><li><a href="#">Bureaux de direction</a></li><li><a href="#">Sièges &amp; Fauteuils</a></li><li><a href="#">Mobilier de réunion</a></li><li><a href="#">Rangements</a></li><li><a href="#">Accessoires</a></li></ul></div>
     <div><div class="fct">Services</div><ul class="fl"><li><a href="#">Agencement sur mesure</a></li><li><a href="#">Conseil en aménagement</a></li><li><a href="#">Programme Architectes</a></li><li><a href="#">Devis en ligne</a></li><li><a href="#">Livraison &amp; Pose</a></li><li><a href="#">SAV &amp; Garantie</a></li></ul></div>
