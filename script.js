@@ -215,3 +215,57 @@ async function loadRealisations() {
 }
 
 loadRealisations()
+// Load dynamic mega menu
+async function loadMegaMenu() {
+  const [{ data: cats }, { data: sous }] = await Promise.all([
+    sbClient.from('categories').select('*').order('nom'),
+    sbClient.from('sous_categories').select('*').order('nom'),
+  ])
+  if (!cats || cats.length === 0) return
+
+  const megaL = document.querySelector('.mega-l')
+  const megaR = document.querySelector('.mega-r')
+  if (!megaL || !megaR) return
+
+  const colors = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12']
+
+  // build left categories
+  megaL.innerHTML = ''
+  cats.forEach((cat, i) => {
+    const a = document.createElement('a')
+    a.href = '#'
+    a.textContent = cat.nom
+    if (i === 0) a.classList.add('act')
+    a.addEventListener('mouseenter', () => {
+      document.querySelectorAll('.mega-l a').forEach(x => x.classList.remove('act'))
+      a.classList.add('act')
+      renderSous(cat.id)
+    })
+    megaL.appendChild(a)
+  })
+
+  // render sous-categories for a given category
+  function renderSous(catId) {
+    const filtered = sous.filter(s => s.categorie_id === catId)
+    megaR.innerHTML = ''
+    filtered.forEach((s, i) => {
+      const a = document.createElement('a')
+      a.className = 'mi'
+      a.href = '#'
+      a.innerHTML = `<div class="mi-img ${colors[i % colors.length]}"></div><div class="mi-lbl">${s.nom}</div>`
+      megaR.appendChild(a)
+    })
+    // add catalogue card
+    const cat = document.createElement('a')
+    cat.className = 'mi'
+    cat.href = '#'
+    cat.style.gridColumn = 'span 2'
+    cat.innerHTML = `<div class="mi-img" style="background:var(--blue);display:flex;align-items:center;justify-content:center;gap:12px;padding:0 24px"><span style="font-family:var(--serif);font-size:22px;color:white;font-weight:300">Catalogue 2024–2025</span><span style="font-size:11px;color:rgba(255,255,255,.6);letter-spacing:.1em;text-transform:uppercase">PDF gratuit</span></div><div class="mi-lbl" style="background:var(--ink);color:white;border:none">Télécharger le catalogue complet →</div>`
+    megaR.appendChild(cat)
+  }
+
+  // render first category by default
+  renderSous(cats[0].id)
+}
+
+loadMegaMenu()
