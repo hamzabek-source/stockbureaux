@@ -3,35 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catégorie — Stock Bureaux</title>
+<title>Sous-catégorie — Stock Bureaux</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-.cat-layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 114px)}
-.cat-sidebar{border-right:1px solid var(--border);padding:40px 0;position:sticky;top:114px;height:calc(100vh - 114px);overflow-y:auto}
+.cat-layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 70px)}
+.cat-sidebar{border-right:1px solid var(--border);padding:40px 0;position:sticky;top:70px;height:calc(100vh - 70px);overflow-y:auto}
 .cat-sidebar-title{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-f);padding:0 28px;margin-bottom:16px}
 .cat-sidebar a{display:block;font-size:13px;color:var(--ink-m);text-decoration:none;padding:11px 28px;border-left:2px solid transparent;transition:all .2s;line-height:1.4}
 .cat-sidebar a:hover{color:var(--blue);background:var(--blue-l)}
 .cat-sidebar a.act{color:var(--blue);border-left-color:var(--blue);background:var(--blue-l);font-weight:500}
+.cat-sidebar .back-link{font-size:11px;color:var(--ink-f);padding:8px 28px;display:flex;align-items:center;gap:6px;margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:16px}
 .cat-main{padding:48px 56px}
 .cat-eyebrow{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .cat-eyebrow::before{content:'';width:16px;height:1px;background:var(--blue)}
 .cat-title{font-family:var(--serif);font-size:clamp(32px,3.5vw,52px);font-weight:300;color:var(--ink);line-height:1.05;margin-bottom:48px}
-.cat-title em{font-style:italic;color:var(--blue)}
 .sous-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
-.sous-card{background:var(--white);cursor:pointer;text-decoration:none;display:block;overflow:hidden;position:relative;transition:all .25s}
+.sous-card{background:var(--white);cursor:pointer;text-decoration:none;display:block;overflow:hidden;position:relative;transition:all .25s;border:1px solid var(--border)}
 .sous-card:hover{background:var(--cream)}
 .sous-img{width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--cream);position:relative}
 .sous-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
 .sous-card:hover .sous-img img{transform:scale(1.05)}
-.sous-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
-.sous-info{padding:18px 20px;border-top:1px solid var(--border)}
+.sous-info{padding:18px 20px}
 .sous-name{font-family:var(--serif);font-size:18px;font-weight:300;color:var(--ink);margin-bottom:4px}
 .sous-card:hover .sous-name{color:var(--blue)}
 .sous-arrow{position:absolute;bottom:18px;right:20px;width:28px;height:28px;background:var(--blue);color:white;display:flex;align-items:center;justify-content:center;font-size:12px;opacity:0;transition:opacity .25s}
 .sous-card:hover .sous-arrow{opacity:1}
-.cat-empty{padding:80px;text-align:center;color:var(--ink-f);font-size:14px;grid-column:span 3}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-f);margin-bottom:24px}
+.breadcrumb a{color:var(--ink-f);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--blue)}
+.breadcrumb span{color:var(--ink-m)}
 @media(max-width:960px){
 .cat-layout{grid-template-columns:1fr}
 .cat-sidebar{display:none}
@@ -69,15 +71,18 @@
 <div style="height:70px"></div>
 
 <div class="cat-layout">
-  <!-- SIDEBAR -->
   <aside class="cat-sidebar">
     <div class="cat-sidebar-title">Catégories</div>
     <div id="sidebar-cats"></div>
+    <div style="margin-top:24px;padding:0 28px 0;border-top:1px solid var(--border);padding-top:16px">
+      <div class="cat-sidebar-title">Sous-catégories</div>
+      <div id="sidebar-sous"></div>
+    </div>
   </aside>
 
-  <!-- MAIN -->
   <main class="cat-main">
-    <div class="cat-eyebrow" id="cat-eyebrow">Notre collection</div>
+    <div class="breadcrumb" id="breadcrumb"></div>
+    <div class="cat-eyebrow" id="cat-eyebrow">Sous-catégorie</div>
     <h1 class="cat-title" id="cat-title">Chargement...</h1>
     <div class="sous-grid" id="sous-grid"></div>
   </main>
@@ -91,77 +96,83 @@ const sbClient = window.supabase.createClient(
 )
 
 const params = new URLSearchParams(window.location.search)
-let catId = params.get('id')
-let allCats = []
-
-const colors = ['#e8e4dc','#dde4ee','#e4ece0','#ece4e0','#e4e0ec','#e0ece4','#ece8e0','#e8e4e0','#e0e8ec','#ece0e4','#e4ece8','#e8ece4']
+const sousId = params.get('sous_id')
+const catId = params.get('cat_id')
+const colors = ['#e8e4dc','#dde4ee','#e4ece0','#ece4e0','#e4e0ec','#e0ece4','#ece8e0','#e8e4e0']
 
 async function init() {
-  const [{ data: cats }, { data: sous }] = await Promise.all([
+  const [{ data: cats }, { data: allSous }, { data: sousSousCats }, { data: currentSous }] = await Promise.all([
     sbClient.from('categories').select('*').order('nom'),
-    catId ? sbClient.from('sous_categories').select('*').where ? sbClient.from('sous_categories').select('*').eq('categorie_id', catId).order('nom') : sbClient.from('sous_categories').select('*').eq('categorie_id', catId).order('nom') : sbClient.from('sous_categories').select('*').order('nom')
+    sbClient.from('sous_categories').select('*').eq('categorie_id', catId).order('nom'),
+    sbClient.from('sous_sous_categories').select('*').eq('sous_categorie_id', sousId).order('nom'),
+    sbClient.from('sous_categories').select('*, categories(nom)').eq('id', sousId).single()
   ])
 
-  allCats = cats || []
-
-  // if no catId, use first category
-  if (!catId && allCats.length > 0) {
-    catId = allCats[0].id
-    window.history.replaceState({}, '', `?id=${catId}`)
-  }
-
-  // build sidebar
-  const sidebar = document.getElementById('sidebar-cats')
-  sidebar.innerHTML = ''
-  allCats.forEach(cat => {
+  // sidebar categories
+  const sidebarCats = document.getElementById('sidebar-cats')
+  ;(cats || []).forEach(cat => {
     const a = document.createElement('a')
     a.href = `categorie.html?id=${cat.id}`
     a.textContent = cat.nom
     if (cat.id === catId) a.classList.add('act')
-    sidebar.appendChild(a)
+    sidebarCats.appendChild(a)
   })
 
-  // current category
-  const currentCat = allCats.find(c => c.id === catId)
-  if (currentCat) {
-    document.title = `${currentCat.nom} — Stock Bureaux`
-    document.getElementById('cat-eyebrow').textContent = 'Notre collection'
-    document.getElementById('cat-title').innerHTML = currentCat.nom
+  // sidebar sous-cats
+  const sidebarSous = document.getElementById('sidebar-sous')
+  ;(allSous || []).forEach(s => {
+    const a = document.createElement('a')
+    a.href = '#'
+    a.textContent = s.nom
+    if (s.id === sousId) a.classList.add('act')
+    a.onclick = async (e) => {
+      e.preventDefault()
+      const { data: ssc } = await sbClient.from('sous_sous_categories').select('id').eq('sous_categorie_id', s.id).limit(1)
+      if (ssc && ssc.length > 0) {
+        window.location.href = `sous-categorie.html?sous_id=${s.id}&cat_id=${catId}`
+      } else {
+        window.location.href = `produits.html?sous_id=${s.id}&cat_id=${catId}`
+      }
+    }
+    sidebarSous.appendChild(a)
+  })
+
+  // breadcrumb
+  const bc = document.getElementById('breadcrumb')
+  bc.innerHTML = `
+    <a href="index.html">Accueil</a>
+    <span>›</span>
+    <a href="categorie.html?id=${catId}">${currentSous?.categories?.nom || 'Catégorie'}</a>
+    <span>›</span>
+    <span style="color:var(--ink)">${currentSous?.nom || ''}</span>
+  `
+
+  // title
+  if (currentSous) {
+    document.title = `${currentSous.nom} — Stock Bureaux`
+    document.getElementById('cat-eyebrow').textContent = currentSous.categories?.nom || ''
+    document.getElementById('cat-title').textContent = currentSous.nom
   }
 
-  // fetch sous-cats for this category
-  const { data: sousCats } = await sbClient.from('sous_categories').select('*').eq('categorie_id', catId).order('nom')
-
+  // sous-sous-cats grid
   const grid = document.getElementById('sous-grid')
   grid.innerHTML = ''
 
-  if (!sousCats || sousCats.length === 0) {
-    grid.innerHTML = '<div class="cat-empty">Aucune sous-catégorie trouvée.</div>'
+  if (!sousSousCats || sousSousCats.length === 0) {
+    grid.innerHTML = '<div style="padding:60px;text-align:center;color:var(--ink-f);font-size:14px;grid-column:span 3">Aucune sous-catégorie trouvée.</div>'
     return
   }
 
-  sousCats.forEach((s, i) => {
+  sousSousCats.forEach((ssc, i) => {
     const a = document.createElement('a')
     a.className = 'sous-card'
-a.href = '#'
-a.onclick = async (e) => {
-  e.preventDefault()
-  const { data: ssc } = await sbClient.from('sous_sous_categories').select('id').eq('sous_categorie_id', s.id).limit(1)
-  if (ssc && ssc.length > 0) {
-    window.location.href = `sous-categorie.html?sous_id=${s.id}&cat_id=${catId}`
-  } else {
-    window.location.href = `produits.html?sous_id=${s.id}&cat_id=${catId}`
-  }
-}
+    a.href = `produits.html?sous_sous_id=${ssc.id}&sous_id=${sousId}&cat_id=${catId}`
     a.innerHTML = `
       <div class="sous-img">
-        ${s.image_url
-          ? `<img src="${s.image_url}" alt="${s.nom}" loading="lazy">`
-          : `<div class="sous-img-placeholder" style="background:${colors[i % colors.length]}"></div>`
-        }
+        <div style="width:100%;height:100%;background:${colors[i % colors.length]}"></div>
       </div>
       <div class="sous-info">
-        <div class="sous-name">${s.nom}</div>
+        <div class="sous-name">${ssc.nom}</div>
       </div>
       <div class="sous-arrow">→</div>
     `
@@ -171,7 +182,6 @@ a.onclick = async (e) => {
 
 init()
 
-// cursor
 const cur = document.getElementById('cur')
 const curR = document.getElementById('curR')
 let mx=0,my=0,rx=0,ry=0
