@@ -275,23 +275,19 @@ loadMegaMenu()
 async function loadCategories() {
   const { data: cats } = await sbClient.from('categories').select('*').order('nom')
   if (!cats || cats.length === 0) return
-
   const cg = document.querySelector('.cg')
   if (!cg) return
-
   const colors = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12']
-
-  // remove old static cards but keep the cta-card at the end
   const ctaCard = cg.querySelector('.cta-card')
   cg.innerHTML = ''
-
   cats.forEach((cat, i) => {
-    const div = document.createElement('div')
-    div.className = 'cc fu vis'
-    div.style.cursor = 'pointer'
-  div.innerHTML = `
+    const a = document.createElement('a')
+    a.className = 'cc fu vis'
+    a.href = `categorie.html?id=${cat.id}`
+    a.style.textDecoration = 'none'
+    a.innerHTML = `
       <div class="ci">
-        ${cat.image_url 
+        ${cat.image_url
           ? `<img src="${cat.image_url}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">`
           : `<div class="cs ${colors[i % colors.length]}"><div class="csh" style="width:55%;height:42%;"></div></div>`
         }
@@ -302,10 +298,8 @@ async function loadCategories() {
       </div>
       <div class="car">→</div>
     `
-    cg.appendChild(div)
+    cg.appendChild(a)
   })
-
   if (ctaCard) cg.appendChild(ctaCard)
 }
-
 loadCategories()
