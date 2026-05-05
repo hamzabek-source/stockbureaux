@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produits — Stock Bureaux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.prod-layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 114px)}
+.prod-sidebar{border-right:1px solid var(--border);padding:40px 0;position:sticky;top:114px;height:calc(100vh - 114px);overflow-y:auto}
+.prod-sidebar-section{margin-bottom:32px}
+.prod-sidebar-title{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-f);padding:0 28px;margin-bottom:12px}
+.prod-sidebar a{display:block;font-size:13px;color:var(--ink-m);text-decoration:none;padding:10px 28px;border-left:2px solid transparent;transition:all .2s}
+.prod-sidebar a:hover{color:var(--blue);background:var(--blue-l)}
+.prod-sidebar a.act{color:var(--blue);border-left-color:var(--blue);background:var(--blue-l);font-weight:500}
+.prod-sidebar a.cat-link{color:var(--ink-f);font-size:12px}
+.prod-main{padding:48px 56px}
+.prod-header{margin-bottom:40px}
+.prod-eyebrow{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.prod-eyebrow::before{content:'';width:16px;height:1px;background:var(--blue)}
+.prod-title{font-family:var(--serif);font-size:clamp(28px,3vw,44px);font-weight:300;color:var(--ink);line-height:1.1;margin-bottom:6px}
+.prod-count{font-size:12px;color:var(--ink-f);margin-top:8px}
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;background:var(--border)}
+.prod-card{background:var(--white);cursor:pointer;text-decoration:none;display:block;overflow:hidden;position:relative;transition:all .25s}
+.prod-card:hover{background:var(--cream)}
+.prod-img{width:100%;aspect-ratio:1;overflow:hidden;background:var(--cream);position:relative}
+.prod-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
+.prod-card:hover .prod-img img{transform:scale(1.05)}
+.prod-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--cream)}
+.prod-info{padding:16px 18px;border-top:1px solid var(--border)}
+.prod-name{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink);margin-bottom:4px;line-height:1.3}
+.prod-card:hover .prod-name{color:var(--blue)}
+.prod-sub{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--blue)}
+.prod-devis{position:absolute;bottom:16px;right:18px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:var(--blue);color:white;padding:5px 10px;opacity:0;transition:opacity .25s}
+.prod-card:hover .prod-devis{opacity:1}
+.prod-empty{padding:80px;text-align:center;color:var(--ink-f);font-size:14px;grid-column:span 3}
+/* modal */
+#prod-modal{display:none;position:fixed;inset:0;z-index:500;align-items:center;justify-content:center}
+#prod-modal.open{display:flex}
+@media(max-width:960px){
+.prod-layout{grid-template-columns:1fr}
+.prod-sidebar{display:none}
+.prod-main{padding:32px 22px}
+.prod-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body style="cursor:none">
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="curR"></div>
+
+<nav id="nb">
+  <div class="nav-in">
+    <a href="index.html" class="logo"><img src="img/logo.svg" alt="Stock Bureaux"></a>
+    <div class="srch">
+      <span class="srch-ic">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </span>
+      <input type="text" placeholder="Rechercher un produit...">
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="index.html#prod">Produits</a></li>
+      <li><a href="realisations.html">Projets</a></li>
+      <li><a href="index.html#show">Showroom</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="index.html#cat" class="btn-ghost">Catalogue</a>
+      <a href="index.html#devis" class="bp">Devis Projet →</a>
+    </div>
+  </div>
+</nav>
+
+<div style="height:70px"></div>
+
+<div class="prod-layout">
+  <!-- SIDEBAR -->
+  <aside class="prod-sidebar">
+    <div class="prod-sidebar-section">
+      <div class="prod-sidebar-title">Catégories</div>
+      <div id="sidebar-cats"></div>
+    </div>
+    <div class="prod-sidebar-section">
+      <div class="prod-sidebar-title">Sous-catégories</div>
+      <div id="sidebar-sous"></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="prod-main">
+    <div class="prod-header">
+      <div class="prod-eyebrow" id="prod-eyebrow">Produits</div>
+      <h1 class="prod-title" id="prod-title">Chargement...</h1>
+      <div class="prod-count" id="prod-count"></div>
+    </div>
+    <div class="prod-grid" id="prod-grid"></div>
+  </main>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div id="prod-modal">
+  <div id="prod-modal-bg" style="position:absolute;inset:0;backdrop-filter:blur(12px);background:rgba(0,0,0,.7)"></div>
+  <div style="position:relative;z-index:501;background:var(--white);width:90vw;max-width:900px;max-height:90vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr">
+    <button id="prod-modal-close" style="position:absolute;top:16px;right:20px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--ink-m);z-index:10">×</button>
+    <!-- image -->
+    <div id="pm-img-wrap" style="background:var(--cream);display:flex;align-items:center;justify-content:center;min-height:400px;overflow:hidden">
+      <div id="pm-thumbs" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:5"></div>
+    </div>
+    <!-- info -->
+    <div style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center">
+      <div id="pm-cat" style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);margin-bottom:12px"></div>
+      <h2 id="pm-name" style="font-family:var(--serif);font-size:36px;font-weight:300;color:var(--ink);line-height:1.1;margin-bottom:16px"></h2>
+      <div style="width:32px;height:2px;background:var(--blue);margin-bottom:20px"></div>
+      <p id="pm-desc" style="font-size:14px;line-height:1.8;color:var(--ink-m);margin-bottom:32px"></p>
+      <div id="pm-imgs-small" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px"></div>
+      <a href="index.html#devis" class="bp" style="display:inline-flex;align-items:center;gap:8px;width:fit-content" onclick="closeModal()">Demander un devis →</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sbClient = window.supabase.createClient(
+  'https://lvfbzhinkcovdeiaugsr.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2ZmJ6aGlua2NvdmRlaWF1Z3NyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MTMzMjAsImV4cCI6MjA5MzQ4OTMyMH0.1De-2BGx9qZM5ydDfZ9Y36zktkbpscgp9b2izbvWIIw'
+)
+
+const params = new URLSearchParams(window.location.search)
+const sousId = params.get('sous_id')
+const catId = params.get('cat_id')
+
+const colors = ['#e8e4dc','#dde4ee','#e4ece0','#ece4e0','#e4e0ec','#e0ece4']
+
+async function init() {
+  const [{ data: cats }, { data: allSous }, { data: produits }] = await Promise.all([
+    sbClient.from('categories').select('*').order('nom'),
+    sbClient.from('sous_categories').select('*').eq('categorie_id', catId).order('nom'),
+    sbClient.from('produits').select('*, sous_categories(nom), categories(nom)').eq('sous_categorie_id', sousId).order('created_at', { ascending: false })
+  ])
+
+  // sidebar categories
+  const sidebarCats = document.getElementById('sidebar-cats')
+  ;(cats || []).forEach(cat => {
+    const a = document.createElement('a')
+    a.className = 'cat-link'
+    a.href = `categorie.html?id=${cat.id}`
+    a.textContent = cat.nom
+    if (cat.id === catId) a.style.color = 'var(--blue)'
+    sidebarCats.appendChild(a)
+  })
+
+  // sidebar sous-cats
+  const sidebarSous = document.getElementById('sidebar-sous')
+  ;(allSous || []).forEach(s => {
+    const a = document.createElement('a')
+    a.href = `produits.html?sous_id=${s.id}&cat_id=${catId}`
+    a.textContent = s.nom
+    if (s.id === sousId) a.classList.add('act')
+    sidebarSous.appendChild(a)
+  })
+
+  // current sous-cat info
+  const currentSous = (allSous || []).find(s => s.id === sousId)
+  if (currentSous) {
+    document.title = `${currentSous.nom} — Stock Bureaux`
+    document.getElementById('prod-title').textContent = currentSous.nom
+    const currentCat = (cats || []).find(c => c.id === catId)
+    if (currentCat) document.getElementById('prod-eyebrow').textContent = currentCat.nom
+  }
+
+  // products
+  const grid = document.getElementById('prod-grid')
+  const count = document.getElementById('prod-count')
+  grid.innerHTML = ''
+
+  if (!produits || produits.length === 0) {
+    grid.innerHTML = '<div class="prod-empty">Aucun produit dans cette sous-catégorie.</div>'
+    count.textContent = '0 produit'
+    return
+  }
+
+  count.textContent = `${produits.length} produit${produits.length > 1 ? 's' : ''}`
+
+  produits.forEach((p, i) => {
+    const mainImg = p.images && p.images.length > 0 ? p.images[0] : p.image_url
+    const card = document.createElement('a')
+    card.className = 'prod-card'
+    card.href = '#'
+    card.innerHTML = `
+      <div class="prod-img">
+        ${mainImg
+          ? `<img src="${mainImg}" alt="${p.nom}" loading="lazy">`
+          : `<div class="prod-img-placeholder" style="background:${colors[i % colors.length]}"></div>`
+        }
+      </div>
+      <div class="prod-info">
+        <div class="prod-name">${p.nom}</div>
+        ${currentSous ? `<div class="prod-sub">${currentSous.nom}</div>` : ''}
+      </div>
+      <div class="prod-devis">Demander un devis</div>
+    `
+    card.onclick = (e) => { e.preventDefault(); openModal(p) }
+    grid.appendChild(card)
+  })
+}
+
+function openModal(p) {
+  const images = p.images && p.images.length > 0 ? p.images : (p.image_url ? [p.image_url] : [])
+  const imgWrap = document.getElementById('pm-img-wrap')
+
+  imgWrap.style.backgroundImage = images[0] ? `url('${images[0]}')` : ''
+  imgWrap.style.backgroundSize = 'cover'
+  imgWrap.style.backgroundPosition = 'center'
+
+  document.getElementById('pm-name').textContent = p.nom
+  document.getElementById('pm-desc').textContent = p.description || 'Contactez-nous pour plus d\'informations sur ce produit.'
+  document.getElementById('pm-cat').textContent = p.sous_categories?.nom || ''
+
+  // thumbnail images
+  const imgsSmall = document.getElementById('pm-imgs-small')
+  imgsSmall.innerHTML = ''
+  if (images.length > 1) {
+    images.forEach((url, i) => {
+      const img = document.createElement('img')
+      img.src = url
+      img.style.cssText = `width:52px;height:52px;object-fit:cover;cursor:pointer;border:2px solid ${i===0?'var(--blue)':'var(--border)'};transition:border-color .2s`
+      img.onclick = () => {
+        imgWrap.style.backgroundImage = `url('${url}')`
+        imgsSmall.querySelectorAll('img').forEach(x => x.style.borderColor = 'var(--border)')
+        img.style.borderColor = 'var(--blue)'
+      }
+      imgsSmall.appendChild(img)
+    })
+  }
+
+  document.getElementById('prod-modal').classList.add('open')
+  document.body.style.overflow = 'hidden'
+}
+
+function closeModal() {
+  document.getElementById('prod-modal').classList.remove('open')
+  document.body.style.overflow = ''
+}
+
+document.getElementById('prod-modal-close').onclick = closeModal
+document.getElementById('prod-modal-bg').onclick = closeModal
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal() })
+
+init()
+
+// cursor
+const cur = document.getElementById('cur')
+const curR = document.getElementById('curR')
+let mx=0,my=0,rx=0,ry=0
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'})
+;(function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop)})()
+const nb=document.getElementById('nb')
+window.addEventListener('scroll',()=>{nb.style.boxShadow=window.scrollY>60?'0 2px 20px rgba(0,0,0,.06)':'none'})
+</script>
+</body>
+</html>

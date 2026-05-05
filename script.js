@@ -200,6 +200,7 @@ async function loadRealisations() {
     const div = document.createElement('div')
     div.className = `pc ${isLg ? 'lg' : ''} fu vis`
     div.style.cursor = 'pointer'
+div.onclick = () => window.location.href = `categorie.html?id=${cat.id}`
     div.innerHTML = `
       <div class="pb" style="background-image:url('${r.image_url}');background-size:cover;background-position:center"></div>
       ${isLg ? '<div class="ptag">Projet Signature</div>' : ''}
@@ -291,7 +292,7 @@ async function loadCategories() {
   div.innerHTML = `
       <div class="ci">
         ${cat.image_url 
-          ? `<img src="${cat.image_url}" style="width:100%;height:100%;object-fit:cover;">` 
+          ? `<img src="${cat.image_url}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">`
           : `<div class="cs ${colors[i % colors.length]}"><div class="csh" style="width:55%;height:42%;"></div></div>`
         }
       </div>

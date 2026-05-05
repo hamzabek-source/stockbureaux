@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catégorie — Stock Bureaux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.cat-layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 114px)}
+.cat-sidebar{border-right:1px solid var(--border);padding:40px 0;position:sticky;top:114px;height:calc(100vh - 114px);overflow-y:auto}
+.cat-sidebar-title{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-f);padding:0 28px;margin-bottom:16px}
+.cat-sidebar a{display:block;font-size:13px;color:var(--ink-m);text-decoration:none;padding:11px 28px;border-left:2px solid transparent;transition:all .2s;line-height:1.4}
+.cat-sidebar a:hover{color:var(--blue);background:var(--blue-l)}
+.cat-sidebar a.act{color:var(--blue);border-left-color:var(--blue);background:var(--blue-l);font-weight:500}
+.cat-main{padding:48px 56px}
+.cat-eyebrow{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.cat-eyebrow::before{content:'';width:16px;height:1px;background:var(--blue)}
+.cat-title{font-family:var(--serif);font-size:clamp(32px,3.5vw,52px);font-weight:300;color:var(--ink);line-height:1.05;margin-bottom:48px}
+.cat-title em{font-style:italic;color:var(--blue)}
+.sous-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;background:var(--border)}
+.sous-card{background:var(--white);cursor:pointer;text-decoration:none;display:block;overflow:hidden;position:relative;transition:all .25s}
+.sous-card:hover{background:var(--cream)}
+.sous-img{width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--cream);position:relative}
+.sous-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
+.sous-card:hover .sous-img img{transform:scale(1.05)}
+.sous-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.sous-info{padding:18px 20px;border-top:1px solid var(--border)}
+.sous-name{font-family:var(--serif);font-size:18px;font-weight:300;color:var(--ink);margin-bottom:4px}
+.sous-card:hover .sous-name{color:var(--blue)}
+.sous-arrow{position:absolute;bottom:18px;right:20px;width:28px;height:28px;background:var(--blue);color:white;display:flex;align-items:center;justify-content:center;font-size:12px;opacity:0;transition:opacity .25s}
+.sous-card:hover .sous-arrow{opacity:1}
+.cat-empty{padding:80px;text-align:center;color:var(--ink-f);font-size:14px;grid-column:span 3}
+@media(max-width:960px){
+.cat-layout{grid-template-columns:1fr}
+.cat-sidebar{display:none}
+.cat-main{padding:32px 22px}
+.sous-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body style="cursor:none">
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="curR"></div>
+
+<nav id="nb">
+  <div class="nav-in">
+    <a href="index.html" class="logo"><img src="img/logo.svg" alt="Stock Bureaux"></a>
+    <div class="srch">
+      <span class="srch-ic">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </span>
+      <input type="text" placeholder="Rechercher un produit...">
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="index.html#prod">Produits</a></li>
+      <li><a href="realisations.html">Projets</a></li>
+      <li><a href="index.html#show">Showroom</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="index.html#cat" class="btn-ghost">Catalogue</a>
+      <a href="index.html#devis" class="bp">Devis Projet →</a>
+    </div>
+  </div>
+</nav>
+
+<div style="height:70px"></div>
+
+<div class="cat-layout">
+  <!-- SIDEBAR -->
+  <aside class="cat-sidebar">
+    <div class="cat-sidebar-title">Catégories</div>
+    <div id="sidebar-cats"></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="cat-main">
+    <div class="cat-eyebrow" id="cat-eyebrow">Notre collection</div>
+    <h1 class="cat-title" id="cat-title">Chargement...</h1>
+    <div class="sous-grid" id="sous-grid"></div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sbClient = window.supabase.createClient(
+  'https://lvfbzhinkcovdeiaugsr.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2ZmJ6aGlua2NvdmRlaWF1Z3NyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MTMzMjAsImV4cCI6MjA5MzQ4OTMyMH0.1De-2BGx9qZM5ydDfZ9Y36zktkbpscgp9b2izbvWIIw'
+)
+
+const params = new URLSearchParams(window.location.search)
+let catId = params.get('id')
+let allCats = []
+
+const colors = ['#e8e4dc','#dde4ee','#e4ece0','#ece4e0','#e4e0ec','#e0ece4','#ece8e0','#e8e4e0','#e0e8ec','#ece0e4','#e4ece8','#e8ece4']
+
+async function init() {
+  const [{ data: cats }, { data: sous }] = await Promise.all([
+    sbClient.from('categories').select('*').order('nom'),
+    catId ? sbClient.from('sous_categories').select('*').where ? sbClient.from('sous_categories').select('*').eq('categorie_id', catId).order('nom') : sbClient.from('sous_categories').select('*').eq('categorie_id', catId).order('nom') : sbClient.from('sous_categories').select('*').order('nom')
+  ])
+
+  allCats = cats || []
+
+  // if no catId, use first category
+  if (!catId && allCats.length > 0) {
+    catId = allCats[0].id
+    window.history.replaceState({}, '', `?id=${catId}`)
+  }
+
+  // build sidebar
+  const sidebar = document.getElementById('sidebar-cats')
+  sidebar.innerHTML = ''
+  allCats.forEach(cat => {
+    const a = document.createElement('a')
+    a.href = `categorie.html?id=${cat.id}`
+    a.textContent = cat.nom
+    if (cat.id === catId) a.classList.add('act')
+    sidebar.appendChild(a)
+  })
+
+  // current category
+  const currentCat = allCats.find(c => c.id === catId)
+  if (currentCat) {
+    document.title = `${currentCat.nom} — Stock Bureaux`
+    document.getElementById('cat-eyebrow').textContent = 'Notre collection'
+    document.getElementById('cat-title').innerHTML = currentCat.nom
+  }
+
+  // fetch sous-cats for this category
+  const { data: sousCats } = await sbClient.from('sous_categories').select('*').eq('categorie_id', catId).order('nom')
+
+  const grid = document.getElementById('sous-grid')
+  grid.innerHTML = ''
+
+  if (!sousCats || sousCats.length === 0) {
+    grid.innerHTML = '<div class="cat-empty">Aucune sous-catégorie trouvée.</div>'
+    return
+  }
+
+  sousCats.forEach((s, i) => {
+    const a = document.createElement('a')
+    a.className = 'sous-card'
+    a.href = `produits.html?sous_id=${s.id}&cat_id=${catId}`
+    a.innerHTML = `
+      <div class="sous-img">
+        ${s.image_url
+          ? `<img src="${s.image_url}" alt="${s.nom}" loading="lazy">`
+          : `<div class="sous-img-placeholder" style="background:${colors[i % colors.length]}"></div>`
+        }
+      </div>
+      <div class="sous-info">
+        <div class="sous-name">${s.nom}</div>
+      </div>
+      <div class="sous-arrow">→</div>
+    `
+    grid.appendChild(a)
+  })
+}
+
+init()
+
+// cursor
+const cur = document.getElementById('cur')
+const curR = document.getElementById('curR')
+let mx=0,my=0,rx=0,ry=0
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'})
+;(function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop)})()
+const nb=document.getElementById('nb')
+window.addEventListener('scroll',()=>{nb.style.boxShadow=window.scrollY>60?'0 2px 20px rgba(0,0,0,.06)':'none'})
+</script>
+</body>
+</html>
