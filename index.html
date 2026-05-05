@@ -249,7 +249,7 @@ function buildTrack() {
   track.innerHTML = ''
   reviews.forEach((r, i) => {
     const card = document.createElement('div')
-    card.style.cssText = `min-width:calc((100% - 32px) / 3);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:28px 26px;flex-shrink:0;transition:background .3s;box-sizing:border-box`
+    card.style.cssText = `width:calc((100% - 32px) / 3);min-width:0;max-width:calc((100% - 32px) / 3);word-wrap:break-word;overflow-wrap:break-word;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:28px 26px;flex-shrink:0;transition:background .3s;box-sizing:border-box`
     card.innerHTML = `
       <div style="display:flex;gap:2px;margin-bottom:14px">
         ${'★★★★★'.split('').map(s=>`<span style="color:var(--blue);font-size:14px">★</span>`).join('')}
