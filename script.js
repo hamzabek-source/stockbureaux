@@ -269,3 +269,41 @@ async function loadMegaMenu() {
 }
 
 loadMegaMenu()
+
+// Load dynamic products/categories section
+async function loadCategories() {
+  const { data: cats } = await sbClient.from('categories').select('*').order('nom')
+  if (!cats || cats.length === 0) return
+
+  const cg = document.querySelector('.cg')
+  if (!cg) return
+
+  const colors = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12']
+
+  // remove old static cards but keep the cta-card at the end
+  const ctaCard = cg.querySelector('.cta-card')
+  cg.innerHTML = ''
+
+  cats.forEach((cat, i) => {
+    const div = document.createElement('div')
+    div.className = 'cc fu vis'
+    div.style.cursor = 'pointer'
+    div.innerHTML = `
+      <div class="ci">
+        <div class="cs ${colors[i % colors.length]}">
+          <div class="csh" style="width:55%;height:42%;"></div>
+        </div>
+      </div>
+      <div class="cin">
+        <div class="cn">${cat.nom}</div>
+        <div class="cco">Voir les produits</div>
+      </div>
+      <div class="car">→</div>
+    `
+    cg.appendChild(div)
+  })
+
+  if (ctaCard) cg.appendChild(ctaCard)
+}
+
+loadCategories()
