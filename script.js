@@ -200,7 +200,7 @@ async function loadRealisations() {
     const div = document.createElement('div')
     div.className = `pc ${isLg ? 'lg' : ''} fu vis`
     div.style.cursor = 'pointer'
-div.onclick = () => window.location.href = `categorie.html?id=${cat.id}`
+div.onclick = () => { window.location.href = `categorie.html?id=${cat.id}` }
     div.innerHTML = `
       <div class="pb" style="background-image:url('${r.image_url}');background-size:cover;background-position:center"></div>
       ${isLg ? '<div class="ptag">Projet Signature</div>' : ''}
