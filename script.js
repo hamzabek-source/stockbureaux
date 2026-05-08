@@ -304,22 +304,60 @@ async function loadCategories() {
 }
 loadCategories()
 
-
-// Scroll animations
-const scrollEls = document.querySelectorAll('.rc, .wc, .pc, .cc, .tc, .bc, .pill, .apk, .pa-it, .sh-ii, .sec-hd, .trust, .router, .why, .stmt-sec, .ctad, .arch-sec, .show-sec')
-
-const scrollObs = new IntersectionObserver((entries) => {
-  entries.forEach(el => {
-    if (el.isIntersecting) {
-      el.target.style.opacity = '1'
-      el.target.style.transform = 'translateY(0)'
-    }
+// Creative scroll animations
+function animateOnScroll() {
+  // Fade + slide up — section headers
+  document.querySelectorAll('.sec-hd, .why-hd, .s-ey, .s-hd, .a-ey, .a-t, .sh-ey, .sh-t, .page-hero-h').forEach(el => {
+    el.style.cssText += 'opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform .9s cubic-bezier(.16,1,.3,1)'
   })
-}, { threshold: 0.08 })
 
-scrollEls.forEach(el => {
-  el.style.opacity = '0'
-  el.style.transform = 'translateY(30px)'
-  el.style.transition = 'opacity 0.7s ease, transform 0.7s ease'
-  scrollObs.observe(el)
-})
+  // Fade + slide left — left cards
+  document.querySelectorAll('.rc:first-child, .ctl, .al').forEach(el => {
+    el.style.cssText += 'opacity:0;transform:translateX(-40px);transition:opacity .8s ease,transform .8s cubic-bezier(.16,1,.3,1)'
+  })
+
+  // Fade + slide right — right cards
+  document.querySelectorAll('.rc:last-child, .ctr, .sv').forEach(el => {
+    el.style.cssText += 'opacity:0;transform:translateX(40px);transition:opacity .8s ease,transform .8s cubic-bezier(.16,1,.3,1)'
+  })
+
+  // Scale up — product cards, category cards
+  document.querySelectorAll('.cc, .pc, .rl-card').forEach((el, i) => {
+    el.style.cssText += `opacity:0;transform:scale(0.92);transition:opacity .6s ease ${i*0.05}s,transform .6s cubic-bezier(.16,1,.3,1) ${i*0.05}s`
+  })
+
+  // Stagger slide up — why cards, testimonials
+  document.querySelectorAll('.wc, .tc, .apk').forEach((el, i) => {
+    el.style.cssText += `opacity:0;transform:translateY(50px);transition:opacity .7s ease ${i*0.08}s,transform .7s cubic-bezier(.16,1,.3,1) ${i*0.08}s`
+  })
+
+  // Slide up — pills
+  document.querySelectorAll('.pill').forEach((el, i) => {
+    el.style.cssText += `opacity:0;transform:translateY(20px);transition:opacity .5s ease ${i*0.1}s,transform .5s ease ${i*0.1}s`
+  })
+
+  // Trust bar — blur in
+  document.querySelectorAll('.tlo').forEach((el, i) => {
+    el.style.cssText += `opacity:0;filter:blur(4px);transition:opacity .5s ease ${i*0.06}s,filter .5s ease ${i*0.06}s`
+  })
+
+  // Blog cards — rotate + fade
+  document.querySelectorAll('.bc').forEach((el, i) => {
+    el.style.cssText += `opacity:0;transform:translateY(30px) rotate(${i%2===0?'-':''}1deg);transition:opacity .7s ease ${i*0.1}s,transform .7s cubic-bezier(.16,1,.3,1) ${i*0.1}s`
+  })
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1'
+        entry.target.style.transform = 'translateY(0) translateX(0) scale(1) rotate(0deg)'
+        entry.target.style.filter = 'blur(0)'
+        obs.unobserve(entry.target)
+      }
+    })
+  }, { threshold: 0.1 })
+
+  document.querySelectorAll('.sec-hd,.why-hd,.s-ey,.s-hd,.a-ey,.a-t,.sh-ey,.sh-t,.rc,.ctl,.ctr,.al,.sv,.cc,.pc,.rl-card,.wc,.tc,.apk,.pill,.tlo,.bc').forEach(el => obs.observe(el))
+}
+
+animateOnScroll()
