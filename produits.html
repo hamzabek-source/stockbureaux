@@ -201,7 +201,7 @@ async function init() {
       </div>
       <div class="prod-devis">Demander un devis</div>
     `
-    card.onclick = (e) => { e.preventDefault(); openModal(p) }
+    card.onclick = (e) => { e.preventDefault(); window.location.href = `produit.html?id=${p.id}` }
     grid.appendChild(card)
   })
 }

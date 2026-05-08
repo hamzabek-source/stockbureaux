@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produit — Stock Bureaux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.prod-detail{display:grid;grid-template-columns:1fr 1fr;gap:64px;padding:48px 64px;max-width:1400px;margin:0 auto}
+.pd-gallery{}
+.pd-main-img{width:100%;aspect-ratio:4/3;background:var(--cream);overflow:hidden;margin-bottom:10px;position:relative;cursor:zoom-in}
+.pd-main-img img{width:100%;height:100%;object-fit:contain;transition:transform .4s}
+.pd-thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.pd-thumb{width:72px;height:72px;border:2px solid var(--border);overflow:hidden;cursor:pointer;flex-shrink:0;transition:border-color .2s;background:var(--cream)}
+.pd-thumb.act,.pd-thumb:hover{border-color:var(--blue)}
+.pd-thumb img{width:100%;height:100%;object-fit:cover}
+.pd-info{}
+.pd-breadcrumb{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-f);margin-bottom:20px;flex-wrap:wrap}
+.pd-breadcrumb a{color:var(--ink-f);text-decoration:none;transition:color .2s}
+.pd-breadcrumb a:hover{color:var(--blue)}
+.pd-breadcrumb span{color:var(--blue)}
+.pd-name{font-family:var(--serif);font-size:clamp(28px,3vw,44px);font-weight:300;color:var(--ink);line-height:1.1;margin-bottom:8px}
+.pd-divider{width:40px;height:2px;background:var(--blue);margin:16px 0 20px}
+.pd-desc{font-size:14px;line-height:1.85;color:var(--ink-m);margin-bottom:28px}
+.pd-attr-group{margin-bottom:20px}
+.pd-attr-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin-bottom:10px}
+.pd-buttons{display:flex;gap:6px;flex-wrap:wrap}
+.pd-btn{padding:7px 16px;border:1px solid var(--border);background:white;font-family:var(--sans);font-size:13px;color:var(--ink-s);cursor:pointer;transition:all .2s}
+.pd-btn:hover,.pd-btn.act{border-color:var(--blue);color:var(--blue);background:rgba(23,166,232,.06)}
+.pd-swatches{display:flex;gap:8px;flex-wrap:wrap}
+.pd-swatch{width:56px;height:56px;border:2px solid var(--border);cursor:pointer;overflow:hidden;position:relative;transition:border-color .2s}
+.pd-swatch:hover,.pd-swatch.act{border-color:var(--blue)}
+.pd-swatch img{width:100%;height:100%;object-fit:cover}
+.pd-swatch-label{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);color:white;font-size:8px;text-align:center;padding:2px;opacity:0;transition:opacity .2s}
+.pd-swatch:hover .pd-swatch-label{opacity:1}
+.pd-actions{display:flex;gap:12px;align-items:center;margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
+.pd-qty{display:flex;align-items:center;border:1px solid var(--border)}
+.pd-qty button{width:36px;height:44px;background:none;border:none;font-size:18px;color:var(--ink);cursor:pointer;transition:background .2s}
+.pd-qty button:hover{background:var(--cream)}
+.pd-qty input{width:44px;height:44px;text-align:center;border:none;border-left:1px solid var(--border);border-right:1px solid var(--border);font-family:var(--sans);font-size:14px;outline:none}
+.pd-add{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--blue);color:white;border:none;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;height:44px;cursor:pointer;transition:background .2s;text-decoration:none;padding:0 24px}
+.pd-add:hover{background:var(--ink)}
+.pd-assurances{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.pd-ass-item{display:flex;align-items:center;gap:10px;padding:12px;background:var(--cream);border-radius:4px}
+.pd-ass-icon{width:32px;height:32px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.pd-ass-text{font-size:12px;color:var(--ink-m);line-height:1.4}
+.pd-ass-title{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:2px}
+/* lightbox */
+#lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:600;align-items:center;justify-content:center}
+#lb.open{display:flex}
+#lb img{max-width:90vw;max-height:90vh;object-fit:contain}
+#lb-close{position:absolute;top:20px;right:28px;color:white;font-size:32px;cursor:pointer;background:none;border:none}
+@media(max-width:960px){
+.prod-detail{grid-template-columns:1fr;padding:24px 22px;gap:32px}
+.pd-assurances{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body style="cursor:none">
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="curR"></div>
+
+<nav id="nb">
+  <div class="nav-in">
+    <a href="index.html" class="logo"><img src="img/logo.svg" alt="Stock Bureaux"></a>
+    <div class="srch">
+      <span class="srch-ic">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </span>
+      <input type="text" placeholder="Rechercher un produit...">
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="index.html#prod">Produits</a></li>
+      <li><a href="realisations.html">Projets</a></li>
+      <li><a href="index.html#show">Showroom</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="index.html#cat" class="btn-ghost">Catalogue</a>
+      <a href="index.html#devis" class="bp">Devis →</a>
+    </div>
+  </div>
+</nav>
+
+<div style="height:70px"></div>
+
+<div id="page-content">
+  <div style="padding:80px;text-align:center;color:var(--ink-f)">Chargement...</div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lb" onclick="closeLb()">
+  <button id="lb-close" onclick="closeLb()">×</button>
+  <img id="lb-img" src="">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sbClient = window.supabase.createClient(
+  'https://lvfbzhinkcovdeiaugsr.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2ZmJ6aGlua2NvdmRlaWF1Z3NyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MTMzMjAsImV4cCI6MjA5MzQ4OTMyMH0.1De-2BGx9qZM5ydDfZ9Y36zktkbpscgp9b2izbvWIIw'
+)
+
+const params = new URLSearchParams(window.location.search)
+const prodId = params.get('id')
+let currentImg = 0
+
+async function init() {
+  if (!prodId) { window.location.href = 'index.html'; return }
+
+  const [{ data: prod }, { data: attrs }] = await Promise.all([
+    sbClient.from('produits').select('*, categories(nom), sous_categories(nom, categorie_id), categories!inner(nom)').eq('id', prodId).single(),
+    sbClient.from('product_attributes').select('*').eq('produit_id', prodId).order('created_at')
+  ])
+
+  if (!prod) { window.location.href = 'index.html'; return }
+
+  document.title = `${prod.nom} — Stock Bureaux`
+
+  const images = prod.images && prod.images.length > 0 ? prod.images : (prod.image_url ? [prod.image_url] : [])
+
+  // breadcrumb
+  const catId = prod.sous_categories?.categorie_id || ''
+  const breadcrumb = `
+    <a href="index.html">Accueil</a>
+    <span>›</span>
+    ${prod.categories ? `<a href="categorie.html?id=${catId}">${prod.categories.nom}</a><span>›</span>` : ''}
+    ${prod.sous_categories ? `<a href="produits.html?sous_id=${prod.sous_categorie_id}&cat_id=${catId}">${prod.sous_categories.nom}</a><span>›</span>` : ''}
+    <span>${prod.nom}</span>
+  `
+
+  // attributes HTML
+  let attrsHTML = ''
+  if (attrs && attrs.length > 0) {
+    attrs.forEach(attr => {
+      attrsHTML += `<div class="pd-attr-group"><div class="pd-attr-label">${attr.nom}</div>`
+      if (attr.type === 'button') {
+        attrsHTML += `<div class="pd-buttons">`
+        attr.valeurs.forEach((v, i) => {
+          attrsHTML += `<button class="pd-btn${i===0?' act':''}" onclick="selectBtn(this, 'attr-${attr.id}')" data-group="attr-${attr.id}">${v.label}</button>`
+        })
+        attrsHTML += `</div>`
+      } else if (attr.type === 'color' || attr.type === 'swatch') {
+        attrsHTML += `<div class="pd-swatches">`
+        attr.valeurs.forEach((v, i) => {
+          if (v.image_url) {
+            attrsHTML += `<div class="pd-swatch${i===0?' act':''}" onclick="selectSwatch(this, 'swatch-${attr.id}')" data-group="swatch-${attr.id}" title="${v.label}">
+              <img src="${v.image_url}" alt="${v.label}">
+              <div class="pd-swatch-label">${v.label}</div>
+            </div>`
+          } else {
+            attrsHTML += `<div class="pd-swatch${i===0?' act':''}" onclick="selectSwatch(this, 'swatch-${attr.id}')" data-group="swatch-${attr.id}" title="${v.label}" style="display:flex;align-items:center;justify-content:center;font-size:10px;color:#6E6E6E;text-align:center;padding:2px">${v.label}</div>`
+          }
+        })
+        attrsHTML += `</div>`
+      }
+      attrsHTML += `</div>`
+    })
+  }
+
+  // thumbs
+  const thumbsHTML = images.map((url, i) => `
+    <div class="pd-thumb${i===0?' act':''}" onclick="setImg(${i}, '${url}', this)">
+      <img src="${url}" alt="">
+    </div>
+  `).join('')
+
+  document.getElementById('page-content').innerHTML = `
+    <div class="prod-detail">
+      <div class="pd-gallery">
+        <div class="pd-main-img" onclick="openLb('${images[0]}')">
+          <img id="main-img" src="${images[0] || ''}" alt="${prod.nom}">
+        </div>
+        ${images.length > 1 ? `<div class="pd-thumbs">${thumbsHTML}</div>` : ''}
+      </div>
+
+      <div class="pd-info">
+        <div class="pd-breadcrumb">${breadcrumb}</div>
+        <h1 class="pd-name">${prod.nom}</h1>
+        <div class="pd-divider"></div>
+        <p class="pd-desc">${prod.description || ''}</p>
+
+        ${attrsHTML}
+
+        <div class="pd-actions">
+          <div class="pd-qty">
+            <button onclick="let i=document.getElementById('qty');if(+i.value>1)i.value=+i.value-1">−</button>
+            <input type="number" id="qty" value="1" min="1">
+            <button onclick="let i=document.getElementById('qty');i.value=+i.value+1">+</button>
+          </div>
+          <a href="index.html#devis" class="pd-add">Ajouter au devis →</a>
+        </div>
+
+        <div class="pd-assurances">
+          <div class="pd-ass-item">
+            <div class="pd-ass-icon">🚚</div>
+            <div><div class="pd-ass-title">Livraison & Pose</div><div class="pd-ass-text">Partout au Maroc</div></div>
+          </div>
+          <div class="pd-ass-item">
+            <div class="pd-ass-icon">✓</div>
+            <div><div class="pd-ass-title">Garantie constructeur</div><div class="pd-ass-text">2 ans minimum</div></div>
+          </div>
+          <div class="pd-ass-item">
+            <div class="pd-ass-icon">📋</div>
+            <div><div class="pd-ass-title">Devis sous 24h</div><div class="pd-ass-text">Réponse garantie</div></div>
+          </div>
+          <div class="pd-ass-item">
+            <div class="pd-ass-icon">🏛</div>
+            <div><div class="pd-ass-title">Showroom</div><div class="pd-ass-text">Voir en vrai à Casa</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `
+}
+
+function setImg(i, url, thumb) {
+  document.getElementById('main-img').src = url
+  document.getElementById('main-img').parentElement.onclick = () => openLb(url)
+  document.querySelectorAll('.pd-thumb').forEach(t => t.classList.remove('act'))
+  thumb.classList.add('act')
+}
+
+function selectBtn(btn, group) {
+  document.querySelectorAll(`[data-group="${group}"]`).forEach(b => b.classList.remove('act'))
+  btn.classList.add('act')
+}
+
+function selectSwatch(el, group) {
+  document.querySelectorAll(`[data-group="${group}"]`).forEach(s => s.classList.remove('act'))
+  el.classList.add('act')
+}
+
+function openLb(url) {
+  document.getElementById('lb-img').src = url
+  document.getElementById('lb').classList.add('open')
+}
+function closeLb() { document.getElementById('lb').classList.remove('open') }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLb() })
+
+init()
+
+const cur = document.getElementById('cur')
+const curR = document.getElementById('curR')
+let mx=0,my=0,rx=0,ry=0
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'})
+;(function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop)})()
+const nb=document.getElementById('nb')
+window.addEventListener('scroll',()=>{nb.style.boxShadow=window.scrollY>60?'0 2px 20px rgba(0,0,0,.06)':'none'})
+</script>
+</body>
+</html>
