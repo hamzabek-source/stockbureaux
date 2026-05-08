@@ -323,11 +323,76 @@ window.addEventListener('resize', () => { buildTrack(); goTo(0) })
 <section class="blog-sec" id="blog">
   <div class="sec-hd"><div><div class="sl">Inspiration &amp; Expertise</div><h2 class="st">Le bureau de<br><em>demain</em>, aujourd'hui.</h2></div><a href="#" class="slnk">Tous les articles ↗</a></div>
   <div class="bg">
-    <div class="bc fu"><div class="bi"><div class="bii" style="background:linear-gradient(145deg,#ddd8cf,#c8c3b8)"></div></div><div class="b-c">Tendances 2024</div><h3 class="b-t">Le bureau hybride : comment aménager un espace flexible</h3><p class="b-e">Les nouvelles façons de travailler exigent des espaces qui s'adaptent. Voici les solutions les plus efficaces pour votre entreprise.</p><div class="b-d">15 Avril 2024</div></div>
-    <div class="bc fu"><div class="bi"><div class="bii" style="background:linear-gradient(145deg,#d8e0dd,#c0ccc8)"></div></div><div class="b-c">Ergonomie</div><h3 class="b-t">Pourquoi investir dans des sièges ergonomiques augmente la productivité</h3><p class="b-e">Les études sont formelles : le confort au travail a un impact direct et mesurable sur la performance des équipes.</p><div class="b-d">2 Mars 2024</div></div>
-    <div class="bc fu"><div class="bi"><div class="bii" style="background:linear-gradient(145deg,#e0ddd6,#ccc8c0)"></div></div><div class="b-c">Architecture</div><h3 class="b-t">5 tendances d'aménagement tertiaire qui transforment les entreprises marocaines</h3><p class="b-e">De l'open space à la salle de méditation, les entreprises marocaines réinventent leurs espaces de travail.</p><div class="b-d">18 Fév 2024</div></div>
+    <div class="bc fu"><div class="bi"><img src="img/hybrid.png" style="width:100%;height:100%;object-fit:cover;"></div><div class="b-c">Tendances 2024</div><h3 class="b-t">Le bureau hybride : comment aménager un espace flexible</h3><p class="b-e">Les nouvelles façons de travailler exigent des espaces qui s'adaptent. Voici les solutions les plus efficaces pour votre entreprise.</p><div class="b-d">15 Avril 2024</div></div>
+    <div class="bc fu"><div class="bi"><img src="img/ergo.webp" style="width:100%;height:100%;object-fit:cover;"></div><div class="b-c">Ergonomie</div><h3 class="b-t">Pourquoi investir dans des sièges ergonomiques augmente la productivité</h3><p class="b-e">Les études sont formelles : le confort au travail a un impact direct et mesurable sur la performance des équipes.</p><div class="b-d">2 Mars 2024</div></div>
+    <div class="bc fu"><div class="bi"><img src="img/tendance.webp" style="width:100%;height:100%;object-fit:cover;"></div><div class="b-c">Architecture</div><h3 class="b-t">5 tendances d'aménagement tertiaire qui transforment les entreprises marocaines</h3><p class="b-e">De l'open space à la salle de méditation, les entreprises marocaines réinventent leurs espaces de travail.</p><div class="b-d">18 Fév 2024</div></div>
   </div>
 </section>
+
+
+<!-- FAQ -->
+<section style="padding:96px 64px;background:var(--white);border-top:1px solid var(--border)">
+  <div style="max-width:800px;margin:0 auto">
+    <div style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;display:flex;align-items:center;gap:10px"><span style="width:20px;height:1px;background:var(--blue);display:inline-block"></span>Questions fréquentes</div>
+    <h2 style="font-family:var(--serif);font-size:clamp(32px,3.5vw,48px);font-weight:300;color:var(--ink);margin-bottom:48px;line-height:1.1">Tout ce que vous<br>devez <em style="font-style:italic;color:var(--blue)">savoir.</em></h2>
+
+    <div id="faq-list"></div>
+  </div>
+</section>
+
+<script>
+const faqs = [
+  {
+    q: "Comment obtenir un devis pour mon projet d'aménagement ?",
+    a: "Il vous suffit de cliquer sur le bouton 'Devis Projet' en haut de la page ou de nous contacter directement au +212 5224-08944. Notre équipe vous répond sous 24h avec une proposition personnalisée adaptée à votre budget et vos besoins."
+  },
+  {
+    q: "Livrez-vous et installez-vous dans toutes les villes du Maroc ?",
+    a: "Oui, nous assurons la livraison et la pose sur l'ensemble du territoire marocain — Casablanca, Rabat, Marrakech, Tanger, Fès et toutes les autres villes. Notre équipe de montage professionnelle prend en charge l'installation complète de votre mobilier."
+  },
+  {
+    q: "Quelles sont les garanties sur vos produits ?",
+    a: "Tous nos produits bénéficient d'une garantie constructeur minimum de 2 ans. Certaines gammes premium offrent jusqu'à 5 ans de garantie. Notre service après-vente est disponible pour toute intervention ou remplacement de pièces."
+  },
+  {
+    q: "Proposez-vous des solutions d'aménagement sur mesure ?",
+    a: "Absolument. Notre équipe de conseillers spécialisés vous accompagne de la conception à la réalisation : analyse de vos locaux, plan d'aménagement 2D/3D, sélection des gammes adaptées à votre identité et votre budget, jusqu'à la pose finale."
+  },
+  {
+    q: "Puis-je voir les produits avant d'acheter ?",
+    a: "Oui ! Notre showroom de 1 200 m² à Casablanca (7 bis rue Rethel, Belvédère) vous permet de découvrir et tester l'ensemble de nos collections en conditions réelles. Prenez rendez-vous avec l'un de nos conseillers pour un accompagnement personnalisé."
+  }
+]
+
+const faqList = document.getElementById('faq-list')
+faqs.forEach((faq, i) => {
+  const div = document.createElement('div')
+  div.style.cssText = 'border-bottom:1px solid var(--border);overflow:hidden'
+  div.innerHTML = `
+    <button onclick="toggleFaq(${i})" style="width:100%;text-align:left;padding:22px 0;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:var(--sans)">
+      <span style="font-size:15px;font-weight:500;color:var(--ink)">${faq.q}</span>
+      <span id="faq-icon-${i}" style="font-size:20px;color:var(--blue);flex-shrink:0;transition:transform .3s">+</span>
+    </button>
+    <div id="faq-ans-${i}" style="max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s">
+      <p style="font-size:14px;line-height:1.85;color:var(--ink-m);padding-bottom:20px">${faq.a}</p>
+    </div>
+  `
+  faqList.appendChild(div)
+})
+
+function toggleFaq(i) {
+  const ans = document.getElementById(`faq-ans-${i}`)
+  const icon = document.getElementById(`faq-icon-${i}`)
+  const isOpen = ans.style.maxHeight !== '0px' && ans.style.maxHeight !== ''
+  document.querySelectorAll('[id^="faq-ans-"]').forEach(el => { el.style.maxHeight = '0px' })
+  document.querySelectorAll('[id^="faq-icon-"]').forEach(el => { el.textContent = '+'; el.style.transform = 'rotate(0deg)' })
+  if (!isOpen) {
+    ans.style.maxHeight = '300px'
+    icon.textContent = '+'
+    icon.style.transform = 'rotate(45deg)'
+  }
+}
+</script>
 
 <!-- FOOTER -->
 <footer>
