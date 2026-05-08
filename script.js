@@ -379,3 +379,6 @@ function animateOnScroll() {
 }
 
 animateOnScroll()
+
+// trigger nav state on load
+window.dispatchEvent(new Event('scroll'));
