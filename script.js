@@ -34,10 +34,28 @@ document.querySelectorAll('a,button,.rc,.cc,.pc,.bc,.tc,.mi').forEach(el => {
   });
 });
 
-// Nav scroll shadow
+// Nav scroll - glassmorphism on hero, solid when scrolled
 const nb = document.getElementById('nb');
 window.addEventListener('scroll', () => {
-  nb.style.boxShadow = window.scrollY > 60 ? '0 2px 20px rgba(0,0,0,.06)' : 'none';
+  if (window.scrollY > 80) {
+    nb.style.background = 'rgba(255,255,255,.96)'
+    nb.style.backdropFilter = 'blur(14px)'
+    nb.style.borderBottom = '1px solid rgba(12,12,12,.09)'
+    nb.style.boxShadow = '0 2px 20px rgba(0,0,0,.06)'
+    document.querySelectorAll('.nav-links>li>a').forEach(a => a.style.color = '')
+    document.querySelector('.logo img').style.filter = ''
+    document.querySelector('.btn-ghost').style.color = ''
+    document.querySelector('.btn-ghost').style.borderColor = ''
+  } else {
+    nb.style.background = 'rgba(255,255,255,.08)'
+    nb.style.backdropFilter = 'blur(20px)'
+    nb.style.borderBottom = '1px solid rgba(255,255,255,.15)'
+    nb.style.boxShadow = 'none'
+    document.querySelectorAll('.nav-links>li>a').forEach(a => a.style.color = 'rgba(255,255,255,.85)')
+    document.querySelector('.logo img').style.filter = 'brightness(0) invert(1)'
+    document.querySelector('.btn-ghost').style.color = 'white'
+    document.querySelector('.btn-ghost').style.borderColor = 'rgba(255,255,255,.4)'
+  }
 });
 
 // Scroll-in animation
