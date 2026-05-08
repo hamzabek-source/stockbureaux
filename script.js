@@ -303,3 +303,23 @@ async function loadCategories() {
   if (ctaCard) cg.appendChild(ctaCard)
 }
 loadCategories()
+
+
+// Scroll animations
+const scrollEls = document.querySelectorAll('.rc, .wc, .pc, .cc, .tc, .bc, .pill, .apk, .pa-it, .sh-ii, .sec-hd, .trust, .router, .why, .stmt-sec, .ctad, .arch-sec, .show-sec')
+
+const scrollObs = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.style.opacity = '1'
+      el.target.style.transform = 'translateY(0)'
+    }
+  })
+}, { threshold: 0.08 })
+
+scrollEls.forEach(el => {
+  el.style.opacity = '0'
+  el.style.transform = 'translateY(30px)'
+  el.style.transition = 'opacity 0.7s ease, transform 0.7s ease'
+  scrollObs.observe(el)
+})

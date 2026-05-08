@@ -352,3 +352,4 @@ footer{padding:56px 22px 26px}
 a,button,.rc,.cc,.pc,.bc,.tc,.mi{cursor:pointer}
 .bp,.bwh,.bdo,.bws,.bd,.bf,.pp-qty button,.btn-ghost{cursor:pointer}
 }
+.rc,.wc,.pc,.cc,.tc,.bc,.pill,.apk{transition:opacity .7s ease,transform .7s ease}
