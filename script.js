@@ -252,8 +252,8 @@ async function loadMegaMenu() {
   megaL.innerHTML = ''
   cats.forEach((cat, i) => {
     const a = document.createElement('a')
-    a.href = '#'
-    a.textContent = cat.nom
+   a.href = `categorie.html?id=${cat.id}`
+a.textContent = cat.nom
     if (i === 0) a.classList.add('act')
     a.addEventListener('mouseenter', () => {
       document.querySelectorAll('.mega-l a').forEach(x => x.classList.remove('act'))
@@ -270,8 +270,8 @@ async function loadMegaMenu() {
     filtered.forEach((s, i) => {
       const a = document.createElement('a')
       a.className = 'mi'
-      a.href = '#'
-      a.innerHTML = `<div class="mi-img ${colors[i % colors.length]}"></div><div class="mi-lbl">${s.nom}</div>`
+    a.href = `produits.html?sous_id=${s.id}&cat_id=${catId}`
+a.innerHTML = `<div class="mi-img ${colors[i % colors.length]}"></div><div class="mi-lbl">${s.nom}</div>`
       megaR.appendChild(a)
     })
     // add catalogue card
