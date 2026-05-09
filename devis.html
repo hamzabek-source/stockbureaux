@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demande de Devis — Stock Bureaux</title>
+<link rel="icon" type="image/svg+xml" href="img/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.devis-layout{display:grid;grid-template-columns:1fr 380px;gap:64px;padding:56px 64px;max-width:1300px;margin:0 auto}
+.devis-form-section{}
+.devis-eyebrow{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.devis-eyebrow::before{content:'';width:16px;height:1px;background:var(--blue)}
+.devis-title{font-family:var(--serif);font-size:clamp(32px,3.5vw,48px);font-weight:300;color:var(--ink);line-height:1.1;margin-bottom:8px}
+.devis-title em{font-style:italic;color:var(--blue)}
+.devis-sub{font-size:14px;color:var(--ink-m);margin-bottom:40px;line-height:1.7}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:span 2}
+.form-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-s);font-weight:500}
+.form-label span{color:var(--blue)}
+.form-input{padding:12px 16px;border:1px solid var(--border);background:var(--white);font-family:var(--sans);font-size:13px;color:var(--ink);outline:none;transition:border-color .2s;border-radius:2px}
+.form-input:focus{border-color:var(--blue)}
+.form-input::placeholder{color:var(--ink-f)}
+.form-select{padding:12px 16px;border:1px solid var(--border);background:var(--white);font-family:var(--sans);font-size:13px;color:var(--ink);outline:none;transition:border-color .2s;border-radius:2px;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236E6E6E' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.form-select:focus{border-color:var(--blue)}
+.radio-group{display:flex;gap:20px;align-items:center;padding:12px 0}
+.radio-opt{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink-s)}
+.radio-opt input{accent-color:var(--blue);width:16px;height:16px;cursor:pointer}
+.form-submit{background:var(--blue);color:white;border:none;padding:14px 32px;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;margin-top:8px;display:inline-flex;align-items:center;gap:8px}
+.form-submit:hover{background:var(--ink)}
+.form-submit:disabled{background:#ccc;cursor:not-allowed}
+/* Cart */
+.devis-cart{background:var(--cream);padding:32px;border-top:3px solid var(--blue);height:fit-content;position:sticky;top:90px}
+.cart-title{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--ink);margin-bottom:6px}
+.cart-sub{font-size:12px;color:var(--ink-m);margin-bottom:24px}
+.cart-empty{text-align:center;padding:32px 0;color:var(--ink-f)}
+.cart-empty-icon{font-size:40px;margin-bottom:12px}
+.cart-empty-text{font-size:13px;line-height:1.6;margin-bottom:16px}
+.cart-items{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+.cart-item{display:flex;gap:12px;align-items:center;background:white;padding:10px;border:1px solid var(--border)}
+.cart-item img{width:52px;height:52px;object-fit:cover;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-name{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.cart-item-qty{font-size:11px;color:var(--ink-m)}
+.cart-item-remove{background:none;border:none;color:var(--ink-f);cursor:pointer;font-size:16px;padding:4px;transition:color .2s}
+.cart-item-remove:hover{color:#cc0000}
+.cart-count{background:var(--blue);color:white;font-size:10px;font-weight:600;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;margin-left:6px}
+/* sidebar info */
+.devis-info-card{background:var(--ink);padding:28px;margin-top:20px}
+.dic-title{font-family:var(--serif);font-size:18px;font-weight:300;color:white;margin-bottom:10px}
+.dic-text{font-size:13px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:16px}
+.dic-contact{display:flex;flex-direction:column;gap:8px}
+.dic-item{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.6)}
+.dic-dot{width:4px;height:4px;border-radius:50%;background:var(--blue);flex-shrink:0}
+/* success */
+.success-msg{display:none;background:#f0faf0;border:1px solid #4caf50;padding:20px;border-radius:4px;margin-top:16px;font-size:14px;color:#2e7d32;text-align:center}
+@media(max-width:960px){
+.devis-layout{grid-template-columns:1fr;padding:32px 22px;gap:32px}
+.form-grid{grid-template-columns:1fr}
+.form-group.full{grid-column:span 1}
+.devis-cart{position:static}
+}
+</style>
+</head>
+<body style="cursor:none">
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="curR"></div>
+
+<nav id="nb" style="background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-bottom:1px solid rgba(12,12,12,.09)">
+  <div class="nav-in">
+    <a href="index.html" class="logo"><img src="img/logo.svg" alt="Stock Bureaux"></a>
+    <div class="srch">
+      <span class="srch-ic">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </span>
+      <input type="text" placeholder="Rechercher un produit...">
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="index.html#prod">Produits</a></li>
+      <li><a href="realisations.html">Projets</a></li>
+      <li><a href="index.html#show">Showroom</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="index.html#cat" class="btn-ghost">Catalogue</a>
+      <a href="devis.html" class="bp">Devis Projet →</a>
+    </div>
+  </div>
+</nav>
+
+<div style="height:70px"></div>
+
+<div class="devis-layout">
+  <!-- FORM -->
+  <div class="devis-form-section">
+    <div class="devis-eyebrow">Demande de devis</div>
+    <h1 class="devis-title">Parlons de<br>votre <em>projet.</em></h1>
+    <p class="devis-sub">Remplissez le formulaire ci-dessous et notre équipe vous contacte sous 24h avec une proposition personnalisée.</p>
+
+    <form id="devis-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Nom <span>*</span></label>
+          <input type="text" class="form-input" name="nom" required placeholder="Votre nom">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Prénom <span>*</span></label>
+          <input type="text" class="form-input" name="prenom" required placeholder="Votre prénom">
+        </div>
+
+        <div class="form-group full">
+          <label class="form-label">Vous êtes <span>*</span></label>
+          <div class="radio-group">
+            <label class="radio-opt"><input type="radio" name="type" value="Particulier" required> Particulier</label>
+            <label class="radio-opt"><input type="radio" name="type" value="Société"> Société</label>
+          </div>
+        </div>
+
+        <div class="form-group full">
+          <label class="form-label">Nom de l'entreprise</label>
+          <input type="text" class="form-input" name="entreprise" placeholder="Votre entreprise (si société)">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Téléphone <span>*</span></label>
+          <input type="tel" class="form-input" name="telephone" required placeholder="+212 6XX XXX XXX">
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-mail <span>*</span></label>
+          <input type="email" class="form-input" name="email" required placeholder="votre@email.com">
+        </div>
+
+        <div class="form-group full">
+          <label class="form-label">Adresse</label>
+          <input type="text" class="form-input" name="adresse" placeholder="Votre adresse">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Ville <span>*</span></label>
+          <input type="text" class="form-input" name="ville" required placeholder="Votre ville">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pays <span>*</span></label>
+          <select class="form-select form-input" name="pays" required>
+            <option value="">Sélectionner un pays…</option>
+            <option value="Maroc" selected>Maroc</option>
+            <option value="France">France</option>
+            <option value="Belgique">Belgique</option>
+            <option value="Suisse">Suisse</option>
+            <option value="Canada">Canada</option>
+            <option value="Algérie">Algérie</option>
+            <option value="Tunisie">Tunisie</option>
+            <option value="Sénégal">Sénégal</option>
+            <option value="Côte-d'Ivoire">Côte-d'Ivoire</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+
+        <div class="form-group full">
+          <label class="form-label">Message <span>*</span></label>
+          <textarea class="form-input" name="message" required rows="5" placeholder="Décrivez votre projet, vos besoins, la surface à aménager..."></textarea>
+        </div>
+
+        <div class="form-group full">
+          <button type="submit" class="form-submit" id="submit-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Envoyer ma demande
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="success-msg" id="success-msg">
+      ✓ Votre demande a été envoyée avec succès ! Notre équipe vous contactera sous 24h.
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div>
+    <div class="devis-cart">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <div class="cart-title">Ma liste de produits</div>
+        <span class="cart-count" id="cart-count">0</span>
+      </div>
+      <div class="cart-sub">Produits ajoutés depuis le catalogue</div>
+
+      <div id="cart-items-list">
+        <div class="cart-empty">
+          <div class="cart-empty-icon">📋</div>
+          <div class="cart-empty-text">Votre liste est vide.<br>Ajoutez des produits depuis le catalogue.</div>
+          <a href="index.html#prod" style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid var(--blue);padding-bottom:2px">Voir les produits →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="devis-info-card">
+      <div class="dic-title">Besoin d'un conseil ?</div>
+      <div class="dic-text">Chaque détail compte. Notre équipe d'experts peut personnaliser chaque aspect de votre espace de travail.</div>
+      <div class="dic-contact">
+        <div class="dic-item"><div class="dic-dot"></div>+212 5224-08944</div>
+        <div class="dic-item"><div class="dic-dot"></div>contact@stockbureaux.com</div>
+        <div class="dic-item"><div class="dic-dot"></div>Lun – Sam · 9h00 – 18h00</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sbClient = window.supabase.createClient(
+  'https://lvfbzhinkcovdeiaugsr.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2ZmJ6aGlua2NvdmRlaWF1Z3NyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MTMzMjAsImV4cCI6MjA5MzQ4OTMyMH0.1De-2BGx9qZM5ydDfZ9Y36zktkbpscgp9b2izbvWIIw'
+)
+
+// Load cart from localStorage
+function loadCart() {
+  const cart = JSON.parse(localStorage.getItem('devis_cart') || '[]')
+  const list = document.getElementById('cart-items-list')
+  const count = document.getElementById('cart-count')
+  count.textContent = cart.length
+
+  if (cart.length === 0) {
+    list.innerHTML = `
+      <div class="cart-empty">
+        <div class="cart-empty-icon">📋</div>
+        <div class="cart-empty-text">Votre liste est vide.<br>Ajoutez des produits depuis le catalogue.</div>
+        <a href="index.html#prod" style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid var(--blue);padding-bottom:2px">Voir les produits →</a>
+      </div>`
+    return
+  }
+
+  list.innerHTML = `<div class="cart-items">${cart.map((item, i) => `
+    <div class="cart-item">
+      ${item.image ? `<img src="${item.image}" alt="${item.nom}">` : '<div style="width:52px;height:52px;background:var(--cream);flex-shrink:0"></div>'}
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.nom}</div>
+        <div class="cart-item-qty">Qté: ${item.qty || 1}</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart(${i})">×</button>
+    </div>`).join('')}
+  </div>
+  <button onclick="clearCart()" style="font-size:11px;color:var(--ink-f);background:none;border:none;cursor:pointer;text-decoration:underline">Vider la liste</button>`
+}
+
+function removeFromCart(i) {
+  const cart = JSON.parse(localStorage.getItem('devis_cart') || '[]')
+  cart.splice(i, 1)
+  localStorage.setItem('devis_cart', JSON.stringify(cart))
+  loadCart()
+}
+
+function clearCart() {
+  localStorage.removeItem('devis_cart')
+  loadCart()
+}
+
+// Form submit
+document.getElementById('devis-form').onsubmit = async function(e) {
+  e.preventDefault()
+  const btn = document.getElementById('submit-btn')
+  btn.disabled = true
+  btn.textContent = 'Envoi en cours...'
+
+  const cart = JSON.parse(localStorage.getItem('devis_cart') || '[]')
+  const fd = new FormData(e.target)
+  const data = {
+    nom: fd.get('nom'),
+    prenom: fd.get('prenom'),
+    type_client: fd.get('type'),
+    entreprise: fd.get('entreprise'),
+    telephone: fd.get('telephone'),
+    email: fd.get('email'),
+    adresse: fd.get('adresse'),
+    ville: fd.get('ville'),
+    pays: fd.get('pays'),
+    message: fd.get('message'),
+    produits: cart.map(p => p.nom).join(', '),
+    created_at: new Date().toISOString()
+  }
+
+  await sbClient.from('devis').insert(data)
+
+  document.getElementById('devis-form').style.display = 'none'
+  document.getElementById('success-msg').style.display = 'block'
+  clearCart()
+}
+
+loadCart()
+
+// cursor
+const cur = document.getElementById('cur')
+const curR = document.getElementById('curR')
+let mx=0,my=0,rx=0,ry=0
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'})
+;(function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop)})()
+</script>
+</body>
+</html>
