@@ -254,6 +254,9 @@ function loadCart() {
       <div class="cart-item-info">
         <div class="cart-item-name">${item.nom}</div>
         <div class="cart-item-qty">Qté: ${item.qty || 1}</div>
+${item.attributs && Object.keys(item.attributs).length > 0 
+  ? `<div style="font-size:10px;color:var(--ink-f);margin-top:2px">${Object.values(item.attributs).join(' · ')}</div>`
+  : ''}
       </div>
       <button class="cart-item-remove" onclick="removeFromCart(${i})">×</button>
     </div>`).join('')}

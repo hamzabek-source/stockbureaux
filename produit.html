@@ -190,7 +190,7 @@ async function init() {
             <input type="number" id="qty" value="1" min="1">
             <button onclick="let i=document.getElementById('qty');i.value=+i.value+1">+</button>
           </div>
-          <a href="index.html#devis" class="pd-add">Ajouter au devis →</a>
+        <button class="pd-add" onclick="addToDevis()">Ajouter au devis →</button>
         </div>
 
         <div class="pd-assurances">
@@ -239,6 +239,43 @@ function openLb(url) {
 }
 function closeLb() { document.getElementById('lb').classList.remove('open') }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeLb() })
+
+
+function addToDevis() {
+  const cart = JSON.parse(localStorage.getItem('devis_cart') || '[]')
+  
+  // get selected attributes
+  const selectedAttrs = {}
+  document.querySelectorAll('[data-group]').forEach(el => {
+    if (el.classList.contains('act')) {
+      const group = el.dataset.group
+      selectedAttrs[group] = el.textContent.trim() || el.title || ''
+    }
+  })
+
+  const mainImg = document.getElementById('main-img')
+  const qty = parseInt(document.getElementById('qty')?.value || 1)
+
+  const item = {
+    id: prodId,
+    nom: document.querySelector('.pd-name')?.textContent || '',
+    image: mainImg?.src || '',
+    qty: qty,
+    attributs: selectedAttrs
+  }
+
+  // avoid duplicates — update qty if same id
+  const existing = cart.findIndex(p => p.id === prodId)
+  if (existing > -1) {
+    cart[existing].qty = qty
+    cart[existing].attributs = selectedAttrs
+  } else {
+    cart.push(item)
+  }
+
+  localStorage.setItem('devis_cart', JSON.stringify(cart))
+  window.location.href = 'devis.html'
+}
 
 init()
 
