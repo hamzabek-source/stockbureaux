@@ -252,34 +252,25 @@ async function loadMegaMenu() {
   megaL.innerHTML = ''
   cats.forEach((cat, i) => {
     const a = document.createElement('a')
-    a.href = `categorie.html?id=${cat.id}`
+    a.href = '#'
     a.textContent = cat.nom
     if (i === 0) a.classList.add('act')
     a.addEventListener('mouseenter', () => {
       document.querySelectorAll('.mega-l a').forEach(x => x.classList.remove('act'))
       a.classList.add('act')
-      renderSous(cat.id, cat)
+      renderSous(cat.id)
     })
     megaL.appendChild(a)
   })
 
   // render sous-categories for a given category
-  function renderSous(catId, cat) {
+  function renderSous(catId) {
     const filtered = sous.filter(s => s.categorie_id === catId)
     megaR.innerHTML = ''
     filtered.forEach((s, i) => {
       const a = document.createElement('a')
       a.className = 'mi'
-      a.href = `categorie.html?id=${catId}`
-      a.onclick = async (e) => {
-        e.preventDefault()
-        const res = await sbClient.from('sous_sous_categories').select('id').eq('sous_categorie_id', s.id).limit(1)
-        if (res.data && res.data.length > 0) {
-          window.location.href = `sous-categorie.html?sous_id=${s.id}&cat_id=${catId}`
-        } else {
-          window.location.href = `produits.html?sous_id=${s.id}&cat_id=${catId}`
-        }
-      }
+      a.href = '#'
       a.innerHTML = `<div class="mi-img ${colors[i % colors.length]}"></div><div class="mi-lbl">${s.nom}</div>`
       megaR.appendChild(a)
     })
@@ -293,7 +284,7 @@ async function loadMegaMenu() {
   }
 
   // render first category by default
-  renderSous(cats[0].id, cats[0])
+  renderSous(cats[0].id)
 }
 
 loadMegaMenu()
